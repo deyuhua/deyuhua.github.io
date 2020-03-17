@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-03-17 Tue 14:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>在k8s上运行pyspark程序</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="华德禹" />
+<meta name="description" content="在mac os上安装docker desktop，部署k8s单机测试环境，运行pyspark程序"
+ />
+<meta name="keywords" content="k8s, kubernets, spark, pyspark, pod, docker" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="baidu-site-verification" content="VsK7KMhTM1" />
+<!-- <link rel="stylesheet" href="/style/solarized-light.css" type="text/css"/> -->
+<link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link href="/images/favicon.png" rel="icon">
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+
+<script>
+  (function(){
+      if (location.hostname !== 'huadeyu.tech') {
+          return;
+      }
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+      if (location.hostname !== "huadeyu.tech") {
+	  return;
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0f9fde052ac9166486f2761c80b2bc93";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">在k8s上运行pyspark程序</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org96d0553">前言</a></li>
+<li><a href="#orgc64295c">要求</a>
+<ul>
+<li><a href="#orgde8d300">安装Docker Desktop</a></li>
+<li><a href="#org724fd3b">开启Kubernets</a></li>
+<li><a href="#org97873dd">安装Spark2.4</a>
+<ul>
+<li><a href="#orga860ce7">Spark On K8S的工作原理</a></li>
+<li><a href="#org293efd0">下载Spark</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orged59b02">在K8S上运行Spark</a>
+<ul>
+<li><a href="#orge277f7e">构建镜像</a></li>
+<li><a href="#org51bb42d">配置kubernets service</a></li>
+<li><a href="#org256c07b">提交spark(Java)</a></li>
+<li><a href="#org471a27f">提交Spark(Python包)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org96d0553" class="outline-2">
+<h2 id="org96d0553">前言</h2>
+<div class="outline-text-2" id="text-org96d0553">
+<p>
+Apache Spark是高性能的分布式计算平台，提供Java，Scala，Python以及R的高阶API。
+Kubernets是Google的容器管理、自动化部署以及扩容的平台工具，提供声明式的描述语法。
+SQL语句就是典型的声明式语法，主要描述做什么，而非如何做。Spark2.3开始，开始支持
+运行在原生Kubernets上。 本文主要描述如何在Mac OS上配置Docker上配置Kubernets，然
+后介绍如何在K8S上运行PySpark程序。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc64295c" class="outline-2">
+<h2 id="orgc64295c">要求</h2>
+<div class="outline-text-2" id="text-orgc64295c">
+<ul class="org-ul">
+<li>Apache Spark(2.4)</li>
+<li>Docker Desktop(18.09.2)</li>
+<li>Kubernets(v1.10.11)</li>
+</ul>
+</div>
+
+<div id="outline-container-orgde8d300" class="outline-3">
+<h3 id="orgde8d300">安装Docker Desktop</h3>
+<div class="outline-text-3" id="text-orgde8d300">
+<p>
+<a href="https://www.docker.com/products/docker-desktop">Docker Desktop Download Address For Mac OS</a>
+</p>
+
+<p>
+完成安装后，在顶部状态栏会出现Docker的图标；
+</p>
+
+
+<div class="figure">
+<p><img src="../images/tools/docker-icon-on-status_bar.jpeg" alt="docker-icon-on-status_bar.jpeg" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org724fd3b" class="outline-3">
+<h3 id="org724fd3b">开启Kubernets</h3>
+<div class="outline-text-3" id="text-org724fd3b">
+<p>
+然后打开Docker的偏好设置，开启Kubernets。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/tools/kubernets-on-docker.jpeg" alt="kubernets-on-docker.jpeg" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97873dd" class="outline-3">
+<h3 id="org97873dd">安装Spark2.4</h3>
+<div class="outline-text-3" id="text-org97873dd">
+</div>
+<div id="outline-container-orga860ce7" class="outline-4">
+<h4 id="orga860ce7">Spark On K8S的工作原理</h4>
+<div class="outline-text-4" id="text-orga860ce7">
+<p>
+[[<img src="https://spark.apache.org/docs/latest/img/k8s-cluster-mode.png" alt="k8s-cluster-mode.png" />][]]
+</p>
+
+<p>
+这个是Spark官网给出的架构图，spark-submit可以直接提交spark应用到k8s集群上，提交
+的工作机理如下：
+</p>
+
+<ul class="org-ul">
+<li>spark创建一个k8s pod来运行spark driver；</li>
+<li>driver继续创建运行在pod中的executors，然后连接上executor，开始执行程序；</li>
+<li>当应用程序执行完成后，executor pod都被回收，driver开始执行持久化日志等，还依旧
+处于"completed"状态，直到最终被垃圾回收或者手动清除；</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org293efd0" class="outline-4">
+<h4 id="org293efd0">下载Spark</h4>
+<div class="outline-text-4" id="text-org293efd0">
+<p>
+<a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.4.2/spark-2.4.2-bin-hadoop2.7.tgz">Spark-2.4.2-bin-hadoop2.7</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~/
+wget https://www.apache.org/dyn/closer.lua/spark/spark-2.4.2/spark-2.4.2-bin-hadoop2.7.tgz
+tar -xf spark-2.4.2-bin-hadoop2.7.tgz
+mv spark-2.4.2-bin-hadoop2.7 spark
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orged59b02" class="outline-2">
+<h2 id="orged59b02">在K8S上运行Spark</h2>
+<div class="outline-text-2" id="text-orged59b02">
+</div>
+<div id="outline-container-orge277f7e" class="outline-3">
+<h3 id="orge277f7e">构建镜像</h3>
+<div class="outline-text-3" id="text-orge277f7e">
+<div class="org-src-container">
+<pre class="src src-sh">./bin/docker-image-tool.sh -t spark-docker build
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-sh">docker images | grep spark-docker
+spark-r                                    spark-docker          a0b4025aae73        6 days ago          739MB
+spark-py                                   spark-docker          557b2ea25340        6 days ago          444MB
+spark                                      spark-docker          4710effdb2de        6 days ago          353MB
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51bb42d" class="outline-3">
+<h3 id="org51bb42d">配置kubernets service</h3>
+<div class="outline-text-3" id="text-org51bb42d">
+<p>
+Spark driever pod使用k8s的服务账号访问k8s api接口，完成executors的创建和监听pod，
+使用如下命令创建serviceaccount以及授权Role或者ClusterRole；
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create serviceaccount spark
+kubectl create clusterrolebinding spark-role --clusterrole=edit  --serviceaccount=default:spark --namespace=default
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org256c07b" class="outline-3">
+<h3 id="org256c07b">提交spark(Java)</h3>
+<div class="outline-text-3" id="text-org256c07b">
+<div class="org-src-container">
+<pre class="src src-sh">bin/spark-submit  <span style="color: #ffff88;">\</span>
+    --master k8s://https://localhost:6443  <span style="color: #ffff88;">\</span>
+    --deploy-mode cluster  <span style="color: #ffff88;">\</span>
+    --conf spark.executor.instances=1  <span style="color: #ffff88;">\</span>
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark  <span style="color: #ffff88;">\</span>
+    --conf spark.kubernetes.container.image=spark:spark-docker  <span style="color: #ffff88;">\</span>
+    --class org.apache.spark.examples.SparkPi  <span style="color: #ffff88;">\</span>
+    --name spark-pi  <span style="color: #ffff88;">\</span>
+    <span style="color: #ffbb66;">local</span>:///opt/spark/examples/jars/spark-examples_2.11-2.4.1.jar
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org471a27f" class="outline-3">
+<h3 id="org471a27f">提交Spark(Python包)</h3>
+<div class="outline-text-3" id="text-org471a27f">
+<p>
+在我的github仓库里面已经创建好了pyspark的python包，clone之后构建镜像，然后执行spark-submit;
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">mkdir ~/spark-example
+<span style="color: #ffbb66;">cd</span> ~/spark-example
+
+git clone https://github.com/deyuhua/pyspark-on-k8s-example.git
+docker build -t pyspark-on-k8s .
+
+<span style="color: #ffbb66;">cd</span> ~/spark
+./bin/spark-submit <span style="color: #ffff88;">\</span>
+    --master k8s://https://localhost:6443 <span style="color: #ffff88;">\</span>
+    --deploy-mode cluster <span style="color: #ffff88;">\</span>
+    --name workflow-spark-k8s <span style="color: #ffff88;">\</span>
+    --conf spark.executor.instances=1 <span style="color: #ffff88;">\</span>
+    --conf spark.kubernetes.container.image=pyspark-on-k8s <span style="color: #ffff88;">\</span>
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span style="color: #ffff88;">\</span>
+    --conf spark.kubernetes.pyspark.pythonVersion=3 <span style="color: #ffff88;">\</span>
+    /usr/bin/run.py
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <div id="editor">Created By OrgMode; <span id="love" style="color: #ff79c6; font-size: 30px;">♥</span><a href="https://zh.wikipedia.org/wiki/Emacs">#EMACS</a></div>
+  <div>Edited By 华德禹 (Deyu Hua) </div>
+</div>
+
+<div id="icons">
+  <div id="nav">
+    <div id="home">
+      <a href="/index.html">Home</a>
+    </div>
+    <div id="github">
+      <a href="https://github.com/deyuhua" target="_blank">Github</a>
+    </div>
+  </div>
+  <div id="avstar">
+    <a href="/index.html"><img src="../images/v.jpeg"></a>
+  </div>
+</div>
+
+<div class="back-to-top">
+  <a href="#top"><i class="far fa-caret-square-up"></i></a>
+</div>
+
+<script type="text/javascript">
+  var offset = 220;
+  var duration = 500;
+  jQuery(window).scroll(function() {
+      if (jQuery(this).scrollTop() > offset) {
+          jQuery('.back-to-top').fadeIn(duration);
+      } else {
+          jQuery('.back-to-top').fadeOut(duration);
+      }
+  });
+
+  jQuery('.back-to-top').click(function() {
+      jQuery('body,html').animate({scrollTop:0},500);
+      return false;
+  });
+
+  let timer = true;
+  setInterval(function() {
+      if (timer)
+          $("#love").animate({fontSize: 18})
+      else
+	  $("#love").animate({fontSize: 24})
+      timer = !timer 
+  }, 300);
+</script>
+
+<script>
+  (function() {
+      if (location.hostname !== 'huadeyu.tech') {
+      	  //return;
+      }
+      var footer = document.querySelector('#footer');
+      var editor = document.querySelector('#editor');
+      var script = document.createElement('script');
+      script.src='https://utteranc.es/client.js';
+      script.setAttribute('repo', 'deyuhua/deyuhua.github.io');
+      script.setAttribute('issue-term', 'pathname');
+      footer.insertBefore(script, editor);
+  })();  
+</script>
+</div>
+</body>
+</html>

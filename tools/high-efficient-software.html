@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-03-17 Tue 15:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mac终端工具配置指南</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="华德禹" />
+<meta name="description" content="在mac os上如何配置iterm2， zsh，tmux以及emacs，结合这些工具的优势，实现高效率工作"
+ />
+<meta name="keywords" content="iterm2, zsh, tmux, emacs, 效率, 编程, 命令行, 工具箱" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="baidu-site-verification" content="VsK7KMhTM1" />
+<link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link href="/images/favicon.png" rel="icon">
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+
+<script>
+  (function(){
+      if (location.hostname !== 'huadeyu.tech') {
+          return;
+      }
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+      if (location.hostname !== "huadeyu.tech") {
+	  return;
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0f9fde052ac9166486f2761c80b2bc93";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Mac终端工具配置指南</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd6000d3">前言</a></li>
+<li><a href="#org7b90060">安装</a>
+<ul>
+<li><a href="#org08d7494">Homebrew</a></li>
+<li><a href="#org1de5ae6">Iterm2</a></li>
+<li><a href="#org795797c">Zsh</a></li>
+<li><a href="#orgaa40320">Tmux</a></li>
+<li><a href="#org3fa3441">Emacs</a></li>
+</ul>
+</li>
+<li><a href="#org18f1395">配置</a>
+<ul>
+<li><a href="#org697a96f">Iterm2</a>
+<ul>
+<li><a href="#orgbadf33f">主题</a></li>
+<li><a href="#org7d86282">修改按键</a></li>
+</ul>
+</li>
+<li><a href="#orgbdd86ee">Zsh</a>
+<ul>
+<li><a href="#org172b6df">配置文件</a></li>
+<li><a href="#org1b0e105">插件配置</a></li>
+<li><a href="#org85bbb26">主题配置</a></li>
+<li><a href="#orgd816a56">Powerlevel9k插件</a></li>
+</ul>
+</li>
+<li><a href="#orgb95f330">Tmux</a>
+<ul>
+<li><a href="#org2f25238">配置要求</a></li>
+<li><a href="#orgc6a483a">配置安装</a></li>
+</ul>
+</li>
+<li><a href="#orgf546e72">Emacs</a></li>
+</ul>
+</li>
+<li><a href="#org0edcf1a">指南</a>
+<ul>
+<li><a href="#orgbf4939f">Tmux快捷键指南</a></li>
+<li><a href="#org832b553">Emacs快捷键指南</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd6000d3" class="outline-2">
+<h2 id="orgd6000d3">前言</h2>
+<div class="outline-text-2" id="text-orgd6000d3">
+<div style="text-align: left;">
+    <a href="https://book.douban.com/subject/5387402/"><img src="../images/tools/the-pragmatic-programmer.jpg" style="width: 240px;"/></a>
+</div>
+
+
+<p>
+<a href="https:/%7Fhttp://img3.doubanio.com/view/subject/l/public/s4646956.jpg/book.douban.com/subject/5387402/">《程序员修炼之道:从小工到专家》</a>是我经常拿出来阅读的书籍，这本书涵盖个人责任、职
+业发展、编程经验以及开发之道等内容。该书令我感悟颇深的是关于工具的选择与积累，纵
+观人类的发展的历史，其实就是工具的进化史，从石器时代到青铜时代再到到铁器时，朝代
+更替，都是工具的发展以及积累产生的革命性的变化。而近现代由于科技和技术的发明，几
+次工业革命也是彻底改变整个人类的生活方式。
+</p>
+
+<p>
+我们生活的信息时代，已经创造许多工具，就软件开发而言，也已经积累大量优秀的工具。
+因此决定开发人员的效率，除了个人智商和知识之外，你的工具箱有些什么工具也决定了你
+的思考方式和工具效率，工具也并非以数量取胜，而在于工具的质量以及多样性，更在于持
+续使用和打磨工具，到达得心应手的程度。正所谓磨刀不误砍柴工，从现在起开始积累丰富
+你的工具箱，你会从其中持续获得收益。本文主要讨论如何在Mac上安装、配置iterm2、zsh、
+tmux以及emacs，打造高效开发环境。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org7b90060" class="outline-2">
+<h2 id="org7b90060">安装</h2>
+<div class="outline-text-2" id="text-org7b90060">
+</div>
+<div id="outline-container-org08d7494" class="outline-3">
+<h3 id="org08d7494">Homebrew</h3>
+<div class="outline-text-3" id="text-org08d7494">
+<div style="text-align: left;">
+  <a href="https://brew.sh"><img src="https://brew.sh/assets/img/homebrew-256x256.png" style="width: 140px;"/></a>
+</div>
+
+<p>
+<a href="https://brew.sh/">Homebrew</a>是Mac上最常用的包管理工具，能够方便的安装各种软件，brew使用ruby些的。打
+开Mac的终端执行下面的命令进行安装。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">/usr/bin/ruby -e <span style="color: #ffff88;">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org1de5ae6" class="outline-3">
+<h3 id="org1de5ae6">Iterm2</h3>
+<div class="outline-text-3" id="text-org1de5ae6">
+<div style="text-align: left;">
+  <a href="https://www.iterm2.com/"><img src="https://www.iterm2.com/img/logo2x.jpg" style="width: 200px;"/></a>
+</div>
+
+<p>
+<a href="https://www.iterm2.com/index.html">Iterm2</a>是Mac下非常优秀的终端模拟器，比系统自带的Terminal具有更好的扩展性，包括无
+鼠标复制粘贴，快捷键定义和修改，字体(可以定制非ASCII字符的字体)和Emoji显示都非常
+好,同时也支持更多的主题配色。执行下面的brew命令进行安装。
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#33719;&#21462;iterm2&#30340;&#20449;&#24687;</span>
+brew cask info iterm2
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iterm2: 3.2.9 (auto_updates)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://www.iterm2.com/</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Not installed</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/iterm2.rb</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Name</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iTerm2</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Artifacts</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iTerm.app (App)</span>
+
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#25191;&#34892;&#23433;&#35013;</span>
+brew cask install iterm2
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org795797c" class="outline-3">
+<h3 id="org795797c">Zsh</h3>
+<div class="outline-text-3" id="text-org795797c">
+<p>
+<a href="https://www.zsh.org/">Zsh</a>是unix环境下的shell程序，它对bash进行了扩展，并且借鉴了许多bash，ksh，tcsh的
+功能，它有如下特性：
+</p>
+
+<ul class="org-ul">
+<li>可帮助用户键入常用命令选项及参数的可编程命令行补全功能，自带对数百条命令的支持</li>
+<li>可与任意Shell共享命令历史</li>
+<li>可在无需运行外部程序（如find）的情况下通过 文件扩展匹配文件</li>
+<li>改进变量/数组处理方式</li>
+<li>在单缓冲区内编辑多行命令</li>
+<li>拼写检查</li>
+<li>多种兼容模式（例如，Zsh可在运行为/bin/sh的情况下伪装成Bourne shell）</li>
+<li>可编程的命令行界面，包括将提示行信息显示在屏幕右侧并在输入过长指令时自动隐藏的功能</li>
+<li>可加载模块可提供额外支持：完整传输控制协议、Unix域套接字控制、FTP客户端及扩展数学函数。</li>
+<li>自带where命令，其与which命令类似，但是显示指定于$PATH中所指定指令的全部位置，而不是仅显示所使用指令的位置。</li>
+<li>目录名称。此功能可让用户设置快捷方式，（如~mydir，与~及~user的工作方式相似）。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-sh">brew install zsh
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgaa40320" class="outline-3">
+<h3 id="orgaa40320">Tmux</h3>
+<div class="outline-text-3" id="text-orgaa40320">
+<p>
+<a href="https://github.com/tmux/tmux">Tmux</a>是非常好用的终端复用工具，能够在单个screen里面创建、访问和管理多个终端，同时
+也可以脱离screen在后台运行。执行下面的命令查看和安装tmux：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">brew info tmux
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">tmux: stable 2.9 (bottled), HEAD</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Terminal multiplexer</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://tmux.github.io/</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/usr/local/Cellar/tmux/2.8 (10 files, 709.5KB) *</span>
+<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">Poured from bottle on 2019-03-27 at 23:15:10</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-core/blob/master/Formula/tmux.rb</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Dependencies</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Build: pkg-config &#10004;</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Required: libevent &#10004;, ncurses &#10004;</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Options</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">--HEAD</span>
+<span style="color: #7a7a7a;">#         </span><span style="color: #7a7a7a;">Install HEAD version</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Caveats</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Example configuration has been installed to:</span>
+<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">/usr/local/opt/tmux/share/tmux</span>
+
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Bash completion has been installed to:</span>
+<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">/usr/local/etc/bash_completion.d</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Analytics</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install: 70,198 (30 days), 118,149 (90 days), 385,484 (365 days)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install_on_request: 59,955 (30 days), 103,387 (90 days), 332,667 (365 days)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">build_error: 0 (30 days)</span>
+
+brew install tmux
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3fa3441" class="outline-3">
+<h3 id="org3fa3441">Emacs</h3>
+<div class="outline-text-3" id="text-org3fa3441">
+<div style="text-align: left;">
+  <a href="https://www.gnu.org/s/emacs/"><img src="http://ergoemacs.org/emacs/emacs_logo/emacs_logo.svg" style="width: 140px;"/></a>
+</div>
+
+<p>
+<a href="https://emacsformacosx.com/">Emacs</a>最初由Richard Stallman于1975年在MIT协同盖伊·史提尔二世共同完成，是基于Emacs
+Lisp上的强大编辑器，通常和VI编辑器进行比较。Emacs Lisp是Lisp的方言之一，受到
+MacLisp和Common Lisp语言的影响，Emacs编辑器可以用Emacs Lisp进行扩展，其实在Emacs
+上执行的每条编辑命令都是Emacs Lisp的函数，Lisp语言本身的强大特性决定了Emacs的内
+在优秀基因🧬。随着Emacs将近40多年的演进和发展，积累大量的编辑插件，能够执行各种
+编辑任务，其中以Org Mode最为突出，Org Mode可以做日程管理、代办事项、GTD、博客等
+许多任务，本文就是在Org Mode下编写然后生成静态站点，托管到Github Pages上。编辑器
+是开发主要的工具，我的建议是选择一个合适的编辑器，将它用于80%以上的编辑任务，持
+续学习、打磨编辑器，至于选择什么编辑器可由个人喜好决定，比较合适的选择包括
+Vim,Vscode,Sublime Text等。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">brew cask info emacs
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">emacs: 26.2</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://emacsformacosx.com/</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Not installed</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/emacs.rb</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Name</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Emacs</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Artifacts</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Emacs.app (App)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/Emacs -&gt; emacs (Binary)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/ebrowse (Binary)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/emacsclient (Binary)</span>
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/etags (Binary)</span>
+
+brew cask install emacs
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org18f1395" class="outline-2">
+<h2 id="org18f1395">配置</h2>
+<div class="outline-text-2" id="text-org18f1395">
+</div>
+<div id="outline-container-org697a96f" class="outline-3">
+<h3 id="org697a96f">Iterm2</h3>
+<div class="outline-text-3" id="text-org697a96f">
+</div>
+<div id="outline-container-orgbadf33f" class="outline-4">
+<h4 id="orgbadf33f">主题</h4>
+<div class="outline-text-4" id="text-orgbadf33f">
+<p>
+克隆Iterm2的主题库，超过200+多个主题可供选择，安装方法如下：
+</p>
+
+<ul class="org-ul">
+<li>brew安装最新的iterm2软件</li>
+<li>输入CMD+i(⌘+i)</li>
+<li>找到Color选项卡</li>
+<li>点击Color Presets</li>
+<li><p>
+点击import，导入喜欢的主题
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7d86282" class="outline-4">
+<h4 id="org7d86282">修改按键</h4>
+<div class="outline-text-4" id="text-org7d86282">
+<p>
+为了便于在iterm2中使用emacs，我修改right command键为ctrl键，因为emacs的许多按键
+操作都是ctrl开始的。
+</p>
+
+<div style="text-align: left;">
+    <img src="../images/tools/iterm2-modify-right-cmd.jpeg" style="width: 680px;"/>
+</div>
+
+<p>
+有touchbar的Mac可以对功能键显示进行修改，默认需要Fn+功能键进行操作，但是编程环境
+下我们通常需要经常使用功能键，需要对默认行为进行修改。
+</p>
+
+<div style="text-align: left;">
+    <img src="../images/tools/mac-function-key-modify.jpeg" style="width: 680px;"/>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbdd86ee" class="outline-3">
+<h3 id="orgbdd86ee">Zsh</h3>
+<div class="outline-text-3" id="text-orgbdd86ee">
+<div style="text-align: left;">
+    <img src="https://camo.githubusercontent.com/5c385f15f3eaedb72cfcfbbaf75355b700ac0757/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6f686d797a73682f6f682d6d792d7a73682d6c6f676f2e706e67" style="width: 280px;"/>
+</div>
+</div>
+
+<div id="outline-container-org172b6df" class="outline-4">
+<h4 id="org172b6df">配置文件</h4>
+<div class="outline-text-4" id="text-org172b6df">
+<p>
+<a href="https://ohmyz.sh/">Oh My Zsh</a>是开源的社区驱动的zsh配置文件项目，能够方便快捷的配置zsh，实现开箱即用
+的终端环境；
+</p>
+
+<p>
+安装方式：
+</p>
+</div>
+
+<ul class="org-ul">
+<li><a id="org94f3ea7"></a>通过curl安装：<br />
+<div class="outline-text-5" id="text-org94f3ea7">
+<div class="org-src-container">
+<pre class="src src-sh">sh -c <span style="color: #ffff88;">"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org20bf7ba"></a>通过wget安装:<br />
+<div class="outline-text-5" id="text-org20bf7ba">
+<div class="org-src-container">
+<pre class="src src-sh">sh -c <span style="color: #ffff88;">"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"</span>
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org1b0e105" class="outline-4">
+<h4 id="org1b0e105">插件配置</h4>
+<div class="outline-text-4" id="text-org1b0e105">
+<p>
+oy-my-zsh支持插件，能够在命令行下更好的显示相关信息，比如git的信息，在~/.zshrc中
+可以修改插件。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffff; font-weight: bold;">plugins</span>=<span style="color: #ffffff;">(</span>
+  git
+  bundler
+  dotenv
+  osx
+  rake
+  rbenv
+  ruby
+<span style="color: #ffffff;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org85bbb26" class="outline-4">
+<h4 id="org85bbb26">主题配置</h4>
+<div class="outline-text-4" id="text-org85bbb26">
+<p>
+绝大部分主题都需要Powerline字体，因此先安装字体:
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">clone</span>
+git clone https://github.com/powerline/fonts.git --depth=1
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install</span>
+<span style="color: #ffbb66;">cd</span> fonts
+./install.sh
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">clean-up a bit</span>
+<span style="color: #ffbb66;">cd</span> ..
+rm -rf fonts
+</pre>
+</div>
+
+
+<p>
+安装Powerlevel9K主题:
+</p>
+
+<div style="text-align: left;">
+    <img src="https://raw.githubusercontent.com/bhilburn/powerlevel9k-logo/master/logo-banner.png" style="width: 280px;"/>
+</div>
+
+<p>
+直接在~/.zshrc中修改主题:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffff; font-weight: bold;">ZSH_THEME</span>=<span style="color: #ffff88;">"powerlevel9k/powerlevel9k"</span>
+
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_PROMPT_ON_NEWLINE</span>=true
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_RPROMPT_ON_NEWLINE</span>=true
+
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#21487;&#20197;&#28155;&#21152;&#26356;&#22810;&#30340;&#25554;&#20214;</span>
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</span>=<span style="color: #ffffff;">(</span>dir vcs<span style="color: #ffffff;">)</span>
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR</span>=$<span style="color: #ffff88;">'\uE0B1'</span>
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR</span>=$<span style="color: #ffff88;">'\uE0B3'</span>
+
+<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">POWERLEVEL9K_COLOR_SCHEME='light'</span>
+
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX</span>=<span style="color: #ffff88;">"&#8625;"</span>
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX</span>=<span style="color: #ffff88;">"&#8627; "</span>
+
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_TIME_FOREGROUND</span>=<span style="color: #ffff88;">'red'</span>
+<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_TIME_BACKGROUND</span>=<span style="color: #ffff88;">'blue'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd816a56" class="outline-4">
+<h4 id="orgd816a56">Powerlevel9k插件</h4>
+<div class="outline-text-4" id="text-orgd816a56">
+<ul class="org-ul">
+<li>background<sub>jobs</sub> - Indicator for background jobs.</li>
+<li>battery - Current battery status.</li>
+<li>context - Your username and host, conditionalized based on $USER and SSH status.</li>
+<li>date - System date.</li>
+<li>dir - Your current working directory.</li>
+<li>dir<sub>writable</sub> - Displays a lock icon, if you do not have write permissions on the current folder.</li>
+<li>disk<sub>usage</sub> - Disk usage of your current partition.</li>
+<li>history - The command number for the current line.</li>
+<li>host - Your current host name</li>
+<li>ip - Shows the current IP address.</li>
+<li>vpn<sub>ip</sub> - Shows the current VPN IP address.</li>
+<li>public<sub>ip</sub> - Shows your public IP address.</li>
+<li>load - Your machine's load averages.</li>
+<li>os<sub>icon</sub> - Display a nice little icon, depending on your operating system.</li>
+<li>ram - Show free RAM.</li>
+<li>root<sub>indicator</sub> - An indicator if the user has superuser status.</li>
+<li>status - The return code of the previous command.</li>
+<li>swap - Prints the current swap size.</li>
+<li>time - System time.</li>
+<li>user - Your current username</li>
+<li>vi<sub>mode</sub>- Your prompt's Vi editing mode (NORMAL|INSERT).</li>
+<li>ssh - Indicates whether or not you are in an SSH session.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb95f330" class="outline-3">
+<h3 id="orgb95f330">Tmux</h3>
+<div class="outline-text-3" id="text-orgb95f330">
+<p>
+<a href="https://github.com/gpakosz/.tmux">Oy My Tmux</a>是漂亮、灵活的配置文件，基本实现开箱即用，非常强大，后期只需要修改
+prefix按键即可。
+</p>
+
+<div style="text-align: left;">
+    <img src="https://cloud.githubusercontent.com/assets/553208/9890858/ee3c0ca6-5c02-11e5-890e-05d825a46c92.gif" style="width: 680px;"/>
+</div>
+</div>
+
+<div id="outline-container-org2f25238" class="outline-4">
+<h4 id="org2f25238">配置要求</h4>
+<div class="outline-text-4" id="text-org2f25238">
+<ul class="org-ul">
+<li>Tmux版本大于2.1, 运行在Linux, Mac, OpenBSD, Cygwin中；</li>
+<li>环境变量$TERM必须设置为xterm-256color</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc6a483a" class="outline-4">
+<h4 id="orgc6a483a">配置安装</h4>
+<div class="outline-text-4" id="text-orgc6a483a">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+cp .tmux/.tmux.conf.local .
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf546e72" class="outline-3">
+<h3 id="orgf546e72">Emacs</h3>
+<div class="outline-text-3" id="text-orgf546e72">
+<p>
+Emacs的配置参见我写的另一篇文章<a href="https://huadeyu.tech/tools/emacs-setup-notes.html">《从零开始配置emacs编辑器》</a>。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0edcf1a" class="outline-2">
+<h2 id="org0edcf1a">指南</h2>
+<div class="outline-text-2" id="text-org0edcf1a">
+</div>
+<div id="outline-container-orgbf4939f" class="outline-3">
+<h3 id="orgbf4939f">Tmux快捷键指南</h3>
+<div class="outline-text-3" id="text-orgbf4939f">
+<div style="text-align: left;">
+    <img src="../images/tools/tmuxcheatsheet.png" />
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org832b553" class="outline-3">
+<h3 id="org832b553">Emacs快捷键指南</h3>
+<div class="outline-text-3" id="text-org832b553">
+<div style="text-align: left;">
+    <img src="../images/tools/emacs-cheetsheet.jpeg" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <div id="editor">Created By OrgMode; <span id="love" style="color: #ff79c6; font-size: 30px;">♥</span><a href="https://zh.wikipedia.org/wiki/Emacs">#EMACS</a></div>
+  <div>Edited By 华德禹 (Deyu Hua) </div>
+</div>
+
+<div id="icons">
+  <div id="nav">
+    <div id="home">
+      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+    </div>
+    <div id="github">
+      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+    </div>
+  </div>
+  <div id="avstar">
+    <a href="/index.html"><img src="../images/v.jpeg"></a>
+  </div>
+</div>
+
+<div class="back-to-top">
+  <a href="#top"><i class="far fa-caret-square-up"></i></a>
+</div>
+
+<script type="text/javascript">
+  var offset = 220;
+  var duration = 500;
+  jQuery(window).scroll(function() {
+      if (jQuery(this).scrollTop() > offset) {
+          jQuery('.back-to-top').fadeIn(duration);
+      } else {
+          jQuery('.back-to-top').fadeOut(duration);
+      }
+  });
+
+  jQuery('.back-to-top').click(function() {
+      jQuery('body,html').animate({scrollTop:0},500);
+      return false;
+  });
+
+  let timer = true;
+  setInterval(function() {
+      if (timer)
+          $("#love").animate({fontSize: 18})
+      else
+	  $("#love").animate({fontSize: 24})
+      timer = !timer 
+  }, 300);
+</script>
+
+<script>
+  (function() {
+      if (location.hostname !== 'huadeyu.tech') {
+      	  //return;
+      }
+      var footer = document.querySelector('#footer');
+      var editor = document.querySelector('#editor');
+      var script = document.createElement('script');
+      script.src='https://utteranc.es/client.js';
+      script.setAttribute('repo', 'deyuhua/deyuhua.github.io');
+      script.setAttribute('issue-term', 'pathname');
+      footer.insertBefore(script, editor);
+  })();  
+</script>
+</div>
+</body>
+</html>
