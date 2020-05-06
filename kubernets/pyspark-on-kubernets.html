@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-17 Tue 15:02 -->
+<!-- 2020-04-30 Thu 09:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>在k8s上运行pyspark程序</title>
@@ -199,6 +199,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="baidu-site-verification" content="VsK7KMhTM1" />
 <link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="/style/themify-icons.css" type="text/css"/>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="/images/favicon.png" rel="icon">
@@ -266,25 +267,25 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org68c296d">前言</a></li>
-<li><a href="#org848585e">要求</a>
+<li><a href="#orgb7e4789">前言</a></li>
+<li><a href="#org4002513">要求</a>
 <ul>
-<li><a href="#org212f968">安装Docker Desktop</a></li>
-<li><a href="#org4df9ff6">开启Kubernets</a></li>
-<li><a href="#org1ca3b56">安装Spark2.4</a>
+<li><a href="#orgda15386">安装Docker Desktop</a></li>
+<li><a href="#orge0b775d">开启Kubernets</a></li>
+<li><a href="#orgf0397aa">安装Spark2.4</a>
 <ul>
-<li><a href="#org5cc223c">Spark On K8S的工作原理</a></li>
-<li><a href="#orga32c45d">下载Spark</a></li>
+<li><a href="#org8c6789f">Spark On K8S的工作原理</a></li>
+<li><a href="#orge4976b2">下载Spark</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgca45a7e">在K8S上运行Spark</a>
+<li><a href="#org93c79d5">在K8S上运行Spark</a>
 <ul>
-<li><a href="#org0a5b96e">构建镜像</a></li>
-<li><a href="#org0407f5d">配置kubernets service</a></li>
-<li><a href="#orgc7289f5">提交spark(Java)</a></li>
-<li><a href="#org458ba45">提交Spark(Python包)</a></li>
+<li><a href="#org5ab878f">构建镜像</a></li>
+<li><a href="#org43e1c95">配置kubernets service</a></li>
+<li><a href="#org845f6c0">提交spark(Java)</a></li>
+<li><a href="#org20f40a3">提交Spark(Python包)</a></li>
 </ul>
 </li>
 </ul>
@@ -292,9 +293,9 @@
 </div>
 
 
-<div id="outline-container-org68c296d" class="outline-2">
-<h2 id="org68c296d">前言</h2>
-<div class="outline-text-2" id="text-org68c296d">
+<div id="outline-container-orgb7e4789" class="outline-2">
+<h2 id="orgb7e4789">前言</h2>
+<div class="outline-text-2" id="text-orgb7e4789">
 <p>
 Apache Spark是高性能的分布式计算平台，提供Java，Scala，Python以及R的高阶API。
 Kubernets是Google的容器管理、自动化部署以及扩容的平台工具，提供声明式的描述语法。
@@ -306,9 +307,9 @@ SQL语句就是典型的声明式语法，主要描述做什么，而非如何�
 </div>
 
 
-<div id="outline-container-org848585e" class="outline-2">
-<h2 id="org848585e">要求</h2>
-<div class="outline-text-2" id="text-org848585e">
+<div id="outline-container-org4002513" class="outline-2">
+<h2 id="org4002513">要求</h2>
+<div class="outline-text-2" id="text-org4002513">
 <ul class="org-ul">
 <li>Apache Spark(2.4)</li>
 <li>Docker Desktop(18.09.2)</li>
@@ -316,9 +317,9 @@ SQL语句就是典型的声明式语法，主要描述做什么，而非如何�
 </ul>
 </div>
 
-<div id="outline-container-org212f968" class="outline-3">
-<h3 id="org212f968">安装Docker Desktop</h3>
-<div class="outline-text-3" id="text-org212f968">
+<div id="outline-container-orgda15386" class="outline-3">
+<h3 id="orgda15386">安装Docker Desktop</h3>
+<div class="outline-text-3" id="text-orgda15386">
 <p>
 <a href="https://www.docker.com/products/docker-desktop">Docker Desktop Download Address For Mac OS</a>
 </p>
@@ -336,9 +337,9 @@ SQL语句就是典型的声明式语法，主要描述做什么，而非如何�
 </div>
 
 
-<div id="outline-container-org4df9ff6" class="outline-3">
-<h3 id="org4df9ff6">开启Kubernets</h3>
-<div class="outline-text-3" id="text-org4df9ff6">
+<div id="outline-container-orge0b775d" class="outline-3">
+<h3 id="orge0b775d">开启Kubernets</h3>
+<div class="outline-text-3" id="text-orge0b775d">
 <p>
 然后打开Docker的偏好设置，开启Kubernets。
 </p>
@@ -351,13 +352,13 @@ SQL语句就是典型的声明式语法，主要描述做什么，而非如何�
 </div>
 </div>
 
-<div id="outline-container-org1ca3b56" class="outline-3">
-<h3 id="org1ca3b56">安装Spark2.4</h3>
-<div class="outline-text-3" id="text-org1ca3b56">
+<div id="outline-container-orgf0397aa" class="outline-3">
+<h3 id="orgf0397aa">安装Spark2.4</h3>
+<div class="outline-text-3" id="text-orgf0397aa">
 </div>
-<div id="outline-container-org5cc223c" class="outline-4">
-<h4 id="org5cc223c">Spark On K8S的工作原理</h4>
-<div class="outline-text-4" id="text-org5cc223c">
+<div id="outline-container-org8c6789f" class="outline-4">
+<h4 id="org8c6789f">Spark On K8S的工作原理</h4>
+<div class="outline-text-4" id="text-org8c6789f">
 <p>
 [[<img src="https://spark.apache.org/docs/latest/img/k8s-cluster-mode.png" alt="k8s-cluster-mode.png" />][]]
 </p>
@@ -376,15 +377,15 @@ SQL语句就是典型的声明式语法，主要描述做什么，而非如何�
 </div>
 </div>
 
-<div id="outline-container-orga32c45d" class="outline-4">
-<h4 id="orga32c45d">下载Spark</h4>
-<div class="outline-text-4" id="text-orga32c45d">
+<div id="outline-container-orge4976b2" class="outline-4">
+<h4 id="orge4976b2">下载Spark</h4>
+<div class="outline-text-4" id="text-orge4976b2">
 <p>
 <a href="https://www.apache.org/dyn/closer.lua/spark/spark-2.4.2/spark-2.4.2-bin-hadoop2.7.tgz">Spark-2.4.2-bin-hadoop2.7</a>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~/
+<pre class="src src-sh"><span style="color: #ff6ac1;">cd</span> ~/
 wget https://www.apache.org/dyn/closer.lua/spark/spark-2.4.2/spark-2.4.2-bin-hadoop2.7.tgz
 tar -xf spark-2.4.2-bin-hadoop2.7.tgz
 mv spark-2.4.2-bin-hadoop2.7 spark
@@ -396,13 +397,13 @@ mv spark-2.4.2-bin-hadoop2.7 spark
 </div>
 
 
-<div id="outline-container-orgca45a7e" class="outline-2">
-<h2 id="orgca45a7e">在K8S上运行Spark</h2>
-<div class="outline-text-2" id="text-orgca45a7e">
+<div id="outline-container-org93c79d5" class="outline-2">
+<h2 id="org93c79d5">在K8S上运行Spark</h2>
+<div class="outline-text-2" id="text-org93c79d5">
 </div>
-<div id="outline-container-org0a5b96e" class="outline-3">
-<h3 id="org0a5b96e">构建镜像</h3>
-<div class="outline-text-3" id="text-org0a5b96e">
+<div id="outline-container-org5ab878f" class="outline-3">
+<h3 id="org5ab878f">构建镜像</h3>
+<div class="outline-text-3" id="text-org5ab878f">
 <div class="org-src-container">
 <pre class="src src-sh">./bin/docker-image-tool.sh -t spark-docker build
 </pre>
@@ -419,9 +420,9 @@ spark                                      spark-docker          4710effdb2de   
 </div>
 </div>
 
-<div id="outline-container-org0407f5d" class="outline-3">
-<h3 id="org0407f5d">配置kubernets service</h3>
-<div class="outline-text-3" id="text-org0407f5d">
+<div id="outline-container-org43e1c95" class="outline-3">
+<h3 id="org43e1c95">配置kubernets service</h3>
+<div class="outline-text-3" id="text-org43e1c95">
 <p>
 Spark driever pod使用k8s的服务账号访问k8s api接口，完成executors的创建和监听pod，
 使用如下命令创建serviceaccount以及授权Role或者ClusterRole；
@@ -436,47 +437,47 @@ kubectl create clusterrolebinding spark-role --clusterrole=edit  --serviceaccoun
 </div>
 
 
-<div id="outline-container-orgc7289f5" class="outline-3">
-<h3 id="orgc7289f5">提交spark(Java)</h3>
-<div class="outline-text-3" id="text-orgc7289f5">
+<div id="outline-container-org845f6c0" class="outline-3">
+<h3 id="org845f6c0">提交spark(Java)</h3>
+<div class="outline-text-3" id="text-org845f6c0">
 <div class="org-src-container">
-<pre class="src src-sh">bin/spark-submit  <span style="color: #ffff88;">\</span>
-    --master k8s://https://localhost:6443  <span style="color: #ffff88;">\</span>
-    --deploy-mode cluster  <span style="color: #ffff88;">\</span>
-    --conf spark.executor.instances=1  <span style="color: #ffff88;">\</span>
-    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark  <span style="color: #ffff88;">\</span>
-    --conf spark.kubernetes.container.image=spark:spark-docker  <span style="color: #ffff88;">\</span>
-    --class org.apache.spark.examples.SparkPi  <span style="color: #ffff88;">\</span>
-    --name spark-pi  <span style="color: #ffff88;">\</span>
-    <span style="color: #ffbb66;">local</span>:///opt/spark/examples/jars/spark-examples_2.11-2.4.1.jar
+<pre class="src src-sh">bin/spark-submit  <span style="color: #f3f99d;">\</span>
+    --master k8s://https://localhost:6443  <span style="color: #f3f99d;">\</span>
+    --deploy-mode cluster  <span style="color: #f3f99d;">\</span>
+    --conf spark.executor.instances=1  <span style="color: #f3f99d;">\</span>
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark  <span style="color: #f3f99d;">\</span>
+    --conf spark.kubernetes.container.image=spark:spark-docker  <span style="color: #f3f99d;">\</span>
+    --class org.apache.spark.examples.SparkPi  <span style="color: #f3f99d;">\</span>
+    --name spark-pi  <span style="color: #f3f99d;">\</span>
+    <span style="color: #ff6ac1;">local</span>:///opt/spark/examples/jars/spark-examples_2.11-2.4.1.jar
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org458ba45" class="outline-3">
-<h3 id="org458ba45">提交Spark(Python包)</h3>
-<div class="outline-text-3" id="text-org458ba45">
+<div id="outline-container-org20f40a3" class="outline-3">
+<h3 id="org20f40a3">提交Spark(Python包)</h3>
+<div class="outline-text-3" id="text-org20f40a3">
 <p>
 在我的github仓库里面已经创建好了pyspark的python包，clone之后构建镜像，然后执行spark-submit;
 </p>
 
 <div class="org-src-container">
 <pre class="src src-sh">mkdir ~/spark-example
-<span style="color: #ffbb66;">cd</span> ~/spark-example
+<span style="color: #ff6ac1;">cd</span> ~/spark-example
 
 git clone https://github.com/deyuhua/pyspark-on-k8s-example.git
 docker build -t pyspark-on-k8s .
 
-<span style="color: #ffbb66;">cd</span> ~/spark
-./bin/spark-submit <span style="color: #ffff88;">\</span>
-    --master k8s://https://localhost:6443 <span style="color: #ffff88;">\</span>
-    --deploy-mode cluster <span style="color: #ffff88;">\</span>
-    --name workflow-spark-k8s <span style="color: #ffff88;">\</span>
-    --conf spark.executor.instances=1 <span style="color: #ffff88;">\</span>
-    --conf spark.kubernetes.container.image=pyspark-on-k8s <span style="color: #ffff88;">\</span>
-    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span style="color: #ffff88;">\</span>
-    --conf spark.kubernetes.pyspark.pythonVersion=3 <span style="color: #ffff88;">\</span>
+<span style="color: #ff6ac1;">cd</span> ~/spark
+./bin/spark-submit <span style="color: #f3f99d;">\</span>
+    --master k8s://https://localhost:6443 <span style="color: #f3f99d;">\</span>
+    --deploy-mode cluster <span style="color: #f3f99d;">\</span>
+    --name workflow-spark-k8s <span style="color: #f3f99d;">\</span>
+    --conf spark.executor.instances=1 <span style="color: #f3f99d;">\</span>
+    --conf spark.kubernetes.container.image=pyspark-on-k8s <span style="color: #f3f99d;">\</span>
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark <span style="color: #f3f99d;">\</span>
+    --conf spark.kubernetes.pyspark.pythonVersion=3 <span style="color: #f3f99d;">\</span>
     /usr/bin/run.py
 </pre>
 </div>
@@ -493,10 +494,10 @@ docker build -t pyspark-on-k8s .
 <div id="icons">
   <div id="nav">
     <div id="home">
-      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+      <a href="/index.html">Home <i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div id="github">
-      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+      <a href="https://github.com/deyuhua" target="_blank">Github <i class="fab fa-github"></i></a>
     </div>
   </div>
   <div id="avstar">

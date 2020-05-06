@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-17 Tue 15:02 -->
+<!-- 2020-04-30 Thu 09:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kubernets开发环境搭建</title>
@@ -199,6 +199,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="baidu-site-verification" content="VsK7KMhTM1" />
 <link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="/style/themify-icons.css" type="text/css"/>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="/images/favicon.png" rel="icon">
@@ -266,30 +267,30 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgccf764e">前言</a>
+<li><a href="#org9d8549a">前言</a>
 <ul>
-<li><a href="#org6480330">系统特点</a></li>
-<li><a href="#org474816f">系统架构</a></li>
+<li><a href="#orgea34bb9">系统特点</a></li>
+<li><a href="#org9579721">系统架构</a></li>
 </ul>
 </li>
-<li><a href="#org5acbd1d">虚拟机开发环境</a>
+<li><a href="#orgc0416d5">虚拟机开发环境</a>
 <ul>
-<li><a href="#orgb289459">虚拟机配置</a></li>
-<li><a href="#org2db9843">安装golang1.12.4</a></li>
-<li><a href="#org8b3095d">获取K8s</a></li>
-<li><a href="#org7a5b893">编译k8s</a></li>
-<li><a href="#org393b651">使用k8s</a></li>
+<li><a href="#org6204cf0">虚拟机配置</a></li>
+<li><a href="#org749f903">安装golang1.12.4</a></li>
+<li><a href="#orge8e9d4d">获取K8s</a></li>
+<li><a href="#org0581db4">编译k8s</a></li>
+<li><a href="#org2562083">使用k8s</a></li>
 </ul>
 </li>
-<li><a href="#org3d22b92">容器开发环境</a></li>
-<li><a href="#orgf4b685a">总结</a></li>
+<li><a href="#orgafaaede">容器开发环境</a></li>
+<li><a href="#org174b178">总结</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgccf764e" class="outline-2">
-<h2 id="orgccf764e">前言</h2>
-<div class="outline-text-2" id="text-orgccf764e">
+<div id="outline-container-org9d8549a" class="outline-2">
+<h2 id="org9d8549a">前言</h2>
+<div class="outline-text-2" id="text-org9d8549a">
 <p>
 Kubernets是Google开源的Google开源的一个容器编排引擎，它支持自动化部署、大规模可
 伸缩、应用容器化管理。Google有着丰富的容器管理经验以及基础设施软件，曾经先后构建
@@ -304,9 +305,9 @@ Kubernets是Google开源的Google开源的一个容器编排引擎，它支持�
 </div>
 
 
-<div id="outline-container-org6480330" class="outline-3">
-<h3 id="org6480330">系统特点</h3>
-<div class="outline-text-3" id="text-org6480330">
+<div id="outline-container-orgea34bb9" class="outline-3">
+<h3 id="orgea34bb9">系统特点</h3>
+<div class="outline-text-3" id="text-orgea34bb9">
 <ul class="org-ul">
 <li>可移植: 支持公有云，私有云，混合云，多重云</li>
 <li>可扩展: 模块化，插件化，可挂载，可组合</li>
@@ -316,9 +317,9 @@ Kubernets是Google开源的Google开源的一个容器编排引擎，它支持�
 </div>
 
 
-<div id="outline-container-org474816f" class="outline-3">
-<h3 id="org474816f">系统架构</h3>
-<div class="outline-text-3" id="text-org474816f">
+<div id="outline-container-org9579721" class="outline-3">
+<h3 id="org9579721">系统架构</h3>
+<div class="outline-text-3" id="text-org9579721">
 <div style="text-align: center;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Kubernetes.png" style="width: 680px;"/>
 </div>
@@ -326,13 +327,13 @@ Kubernets是Google开源的Google开源的一个容器编排引擎，它支持�
 </div>
 </div>
 
-<div id="outline-container-org5acbd1d" class="outline-2">
-<h2 id="org5acbd1d">虚拟机开发环境</h2>
-<div class="outline-text-2" id="text-org5acbd1d">
+<div id="outline-container-orgc0416d5" class="outline-2">
+<h2 id="orgc0416d5">虚拟机开发环境</h2>
+<div class="outline-text-2" id="text-orgc0416d5">
 </div>
-<div id="outline-container-orgb289459" class="outline-3">
-<h3 id="orgb289459">虚拟机配置</h3>
-<div class="outline-text-3" id="text-orgb289459">
+<div id="outline-container-org6204cf0" class="outline-3">
+<h3 id="org6204cf0">虚拟机配置</h3>
+<div class="outline-text-3" id="text-org6204cf0">
 <p>
 在搭建k8s本地环境前，需要准备好基础的操作系统已经必备的工具。本文主要描述如何在
 虚拟机上Ubuntu18.04进行配置，首先安装<a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>或者是VMware Fusion(Mac系统),下载
@@ -342,64 +343,64 @@ Kubernets是Google开源的Google开源的一个容器编排引擎，它支持�
 </div>
 </div>
 
-<div id="outline-container-org2db9843" class="outline-3">
-<h3 id="org2db9843">安装golang1.12.4</h3>
-<div class="outline-text-3" id="text-org2db9843">
+<div id="outline-container-org749f903" class="outline-3">
+<h3 id="org749f903">安装golang1.12.4</h3>
+<div class="outline-text-3" id="text-org749f903">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">download and install golang</span>
-<span style="color: #ffbb66;">cd</span> ~/
+<pre class="src src-sh"><span style="color: #606580;"># </span><span style="color: #606580;">download and install golang</span>
+<span style="color: #ff6ac1;">cd</span> ~/
 wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz
 tar -xf go1.12.4.linux-amd64.tar.gz
 sudo mv go /usr/local/go
 rm go1.12.4.linux-amd64.tar.gz
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">go path for k8s</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">go path for k8s</span>
 mkdir gopath
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
-<span style="color: #7a7a7a;">#               </span><span style="color: #7a7a7a;">setup env variable for non-root user</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export GOROOT=/usr/local/go"</span> &gt;&gt; ~/.bashrc
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export GOPATH=/home/yourname/gopath"</span> &gt;&gt; ~/.bashrc
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export PATH=/usr/local/go/bin:$PATH"</span> &gt;&gt; ~/.bashrc
+<span style="color: #606580;"># </span><span style="color: #606580;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+<span style="color: #606580;">#               </span><span style="color: #606580;">setup env variable for non-root user</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export GOROOT=/usr/local/go"</span> &gt;&gt; ~/.bashrc
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export GOPATH=/home/yourname/gopath"</span> &gt;&gt; ~/.bashrc
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export PATH=/usr/local/go/bin:$PATH"</span> &gt;&gt; ~/.bashrc
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">check golang version</span>
-<span style="color: #ffbb66;">source</span> ~/.bashrc
+<span style="color: #606580;"># </span><span style="color: #606580;">check golang version</span>
+<span style="color: #ff6ac1;">source</span> ~/.bashrc
 go version
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">output: go version go1.12.4 linux/amd64</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">output: go version go1.12.4 linux/amd64</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
-<span style="color: #7a7a7a;">#               </span><span style="color: #7a7a7a;">setup env variable for root user</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+<span style="color: #606580;">#               </span><span style="color: #606580;">setup env variable for root user</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
 sudo su -
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export GOROOT=/usr/local/go"</span> &gt;&gt; /root/.bashrc
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export GOPATH=/home/yourname/gopath"</span> &gt;&gt; /root/.bashrc
-<span style="color: #ffbb66;">echo</span> <span style="color: #ffff88;">"export PATH=/usr/local/go/bin:$PATH"</span> &gt;&gt; /root/.bashrc
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export GOROOT=/usr/local/go"</span> &gt;&gt; /root/.bashrc
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export GOPATH=/home/yourname/gopath"</span> &gt;&gt; /root/.bashrc
+<span style="color: #ff6ac1;">echo</span> <span style="color: #f3f99d;">"export PATH=/usr/local/go/bin:$PATH"</span> &gt;&gt; /root/.bashrc
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">check golang version</span>
-<span style="color: #ffbb66;">source</span> /root/.bashrc
+<span style="color: #606580;"># </span><span style="color: #606580;">check golang version</span>
+<span style="color: #ff6ac1;">source</span> /root/.bashrc
 go version
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">output: go version go1.12.4 linux/amd64</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">output: go version go1.12.4 linux/amd64</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">!!!exit root user</span>
-<span style="color: #ff77cc; font-weight: bold;">exit</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">!!!exit root user</span>
+<span style="color: #ffb86c;">exit</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8b3095d" class="outline-3">
-<h3 id="org8b3095d">获取K8s</h3>
-<div class="outline-text-3" id="text-org8b3095d">
+<div id="outline-container-orge8e9d4d" class="outline-3">
+<h3 id="orge8e9d4d">获取K8s</h3>
+<div class="outline-text-3" id="text-orge8e9d4d">
 <div class="org-src-container">
 <pre class="src src-sh">mkdir -p /home/yourname/gopath/src/k8s.io
-<span style="color: #ffbb66;">cd</span> /home/yourname/gopath/src/k8s.io
+<span style="color: #ff6ac1;">cd</span> /home/yourname/gopath/src/k8s.io
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">1. wget&#19979;&#36733;k8s1.11.10</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">1. wget&#19979;&#36733;k8s1.11.10</span>
 wget https://github.com/kubernetes/kubernetes/archive/v1.11.10.tar.gz
 tar -xf v1.11.10.tar.gz &amp;&amp; mv kubernetes-1.11.10 kubernetes &amp;&amp; rm v1.11.10.tar.gz
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">2. git clone&#30340;&#26041;&#27861;(fork k8s)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">2. git clone&#30340;&#26041;&#27861;(fork k8s)</span>
 git clone https://github.com/YOUYOU/kubernetes.git
 git remote add upstream https://github.com/kubernetes/kubernetes.git
 git fetch upstream
@@ -409,56 +410,56 @@ git checkout -b upstream/release-1.15
 </div>
 </div>
 
-<div id="outline-container-org7a5b893" class="outline-3">
-<h3 id="org7a5b893">编译k8s</h3>
-<div class="outline-text-3" id="text-org7a5b893">
+<div id="outline-container-org0581db4" class="outline-3">
+<h3 id="org0581db4">编译k8s</h3>
+<div class="outline-text-3" id="text-org0581db4">
 <div class="org-src-container">
 <pre class="src src-sh">sudo su -
 apt-get install curl -y
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install etcd</span>
-<span style="color: #ffbb66;">cd</span> /home/yourname/gopath/src/kubernetes
+<span style="color: #606580;"># </span><span style="color: #606580;">install etcd</span>
+<span style="color: #ff6ac1;">cd</span> /home/yourname/gopath/src/kubernetes
 ./hack/install-etcd.sh
-<span style="color: #ffbb66;">export</span> <span style="color: #ffffff; font-weight: bold;">PATH</span>=/home/yourname/gopath/src/kubernetes/third_party/etcd:$<span style="color: #ffffff;">{</span><span style="color: #ffffff; font-weight: bold;">PATH</span><span style="color: #ffffff;">}</span>
+<span style="color: #ff6ac1;">export</span> <span style="color: #ff5c57;">PATH</span>=/home/yourname/gopath/src/kubernetes/third_party/etcd:$<span style="color: #57c7ff;">{</span><span style="color: #ff5c57;">PATH</span><span style="color: #57c7ff;">}</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">compile and run k8s</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">compile and run k8s</span>
 apt-get install make docker.io gcc -y
-<span style="color: #ffbb66;">export</span> <span style="color: #ffffff; font-weight: bold;">KUBERNETES_PROVIDER</span>=local
+<span style="color: #ff6ac1;">export</span> <span style="color: #ff5c57;">KUBERNETES_PROVIDER</span>=local
 ./hack/local-up-cluster.sh
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">build all tools</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">build all tools</span>
 make
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org393b651" class="outline-3">
-<h3 id="org393b651">使用k8s</h3>
-<div class="outline-text-3" id="text-org393b651">
+<div id="outline-container-org2562083" class="outline-3">
+<h3 id="org2562083">使用k8s</h3>
+<div class="outline-text-3" id="text-org2562083">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffbb66;">export</span> <span style="color: #ffffff; font-weight: bold;">KUBECONFIG</span>=/var/run/kubernetes/admin.kubeconfig
+<pre class="src src-sh"><span style="color: #ff6ac1;">export</span> <span style="color: #ff5c57;">KUBECONFIG</span>=/var/run/kubernetes/admin.kubeconfig
 ./cluster/kubectl.sh
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">check k8s install</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">check k8s install</span>
 ./cluster/kubectl.sh cluster-info
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Kubernetes master is running at http://localhost:8080</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">KubeDNS is running at http://localhost:8080/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Kubernetes master is running at http://localhost:8080</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">KubeDNS is running at http://localhost:8080/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3d22b92" class="outline-2">
-<h2 id="org3d22b92">容器开发环境</h2>
+<div id="outline-container-orgafaaede" class="outline-2">
+<h2 id="orgafaaede">容器开发环境</h2>
 </div>
 
-<div id="outline-container-orgf4b685a" class="outline-2">
-<h2 id="orgf4b685a">总结</h2>
-<div class="outline-text-2" id="text-orgf4b685a">
+<div id="outline-container-org174b178" class="outline-2">
+<h2 id="org174b178">总结</h2>
+<div class="outline-text-2" id="text-org174b178">
 <p>
 以上就基本完成kubernets单机本地部署，后续开始阅读阅读源码，先配置好编辑器，推荐
 VIM或者Emacs，如果你想尝试下Emacs的强大编辑和调试功能，可以参考<a href="https://huadeyu.tech/tools/emacs-setup-notes.html">《从零开始配置
@@ -476,10 +477,10 @@ emacs编辑器》</a>，已经配置好了Golang的IDE环境。
 <div id="icons">
   <div id="nav">
     <div id="home">
-      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+      <a href="/index.html">Home <i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div id="github">
-      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+      <a href="https://github.com/deyuhua" target="_blank">Github <i class="fab fa-github"></i></a>
     </div>
   </div>
   <div id="avstar">

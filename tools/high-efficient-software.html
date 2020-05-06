@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-17 Tue 15:02 -->
+<!-- 2020-04-30 Thu 09:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac终端工具配置指南</title>
@@ -199,6 +199,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="baidu-site-verification" content="VsK7KMhTM1" />
 <link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="/style/themify-icons.css" type="text/css"/>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="/images/favicon.png" rel="icon">
@@ -266,54 +267,54 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd6000d3">前言</a></li>
-<li><a href="#org7b90060">安装</a>
+<li><a href="#orgb48403d">前言</a></li>
+<li><a href="#org6320f40">安装</a>
 <ul>
-<li><a href="#org08d7494">Homebrew</a></li>
-<li><a href="#org1de5ae6">Iterm2</a></li>
-<li><a href="#org795797c">Zsh</a></li>
-<li><a href="#orgaa40320">Tmux</a></li>
-<li><a href="#org3fa3441">Emacs</a></li>
+<li><a href="#org485f06a">Homebrew</a></li>
+<li><a href="#orga81f641">Iterm2</a></li>
+<li><a href="#org44dc04d">Zsh</a></li>
+<li><a href="#org0c1cda2">Tmux</a></li>
+<li><a href="#orga997b88">Emacs</a></li>
 </ul>
 </li>
-<li><a href="#org18f1395">配置</a>
+<li><a href="#orga025502">配置</a>
 <ul>
-<li><a href="#org697a96f">Iterm2</a>
+<li><a href="#orgf1f00f2">Iterm2</a>
 <ul>
-<li><a href="#orgbadf33f">主题</a></li>
-<li><a href="#org7d86282">修改按键</a></li>
+<li><a href="#org6fabc91">主题</a></li>
+<li><a href="#org758a659">修改按键</a></li>
 </ul>
 </li>
-<li><a href="#orgbdd86ee">Zsh</a>
+<li><a href="#orgaaca6be">Zsh</a>
 <ul>
-<li><a href="#org172b6df">配置文件</a></li>
-<li><a href="#org1b0e105">插件配置</a></li>
-<li><a href="#org85bbb26">主题配置</a></li>
-<li><a href="#orgd816a56">Powerlevel9k插件</a></li>
+<li><a href="#org51e062d">配置文件</a></li>
+<li><a href="#org1db28e1">插件配置</a></li>
+<li><a href="#org58b5d76">主题配置</a></li>
+<li><a href="#org0b19258">Powerlevel9k插件</a></li>
 </ul>
 </li>
-<li><a href="#orgb95f330">Tmux</a>
+<li><a href="#orgac9d276">Tmux</a>
 <ul>
-<li><a href="#org2f25238">配置要求</a></li>
-<li><a href="#orgc6a483a">配置安装</a></li>
+<li><a href="#orgc8b69f7">配置要求</a></li>
+<li><a href="#org074ea78">配置安装</a></li>
 </ul>
 </li>
-<li><a href="#orgf546e72">Emacs</a></li>
+<li><a href="#org95258ee">Emacs</a></li>
 </ul>
 </li>
-<li><a href="#org0edcf1a">指南</a>
+<li><a href="#org65af9ca">指南</a>
 <ul>
-<li><a href="#orgbf4939f">Tmux快捷键指南</a></li>
-<li><a href="#org832b553">Emacs快捷键指南</a></li>
+<li><a href="#orga422ac6">Tmux快捷键指南</a></li>
+<li><a href="#org66833bf">Emacs快捷键指南</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd6000d3" class="outline-2">
-<h2 id="orgd6000d3">前言</h2>
-<div class="outline-text-2" id="text-orgd6000d3">
+<div id="outline-container-orgb48403d" class="outline-2">
+<h2 id="orgb48403d">前言</h2>
+<div class="outline-text-2" id="text-orgb48403d">
 <div style="text-align: left;">
     <a href="https://book.douban.com/subject/5387402/"><img src="../images/tools/the-pragmatic-programmer.jpg" style="width: 240px;"/></a>
 </div>
@@ -339,13 +340,13 @@ tmux以及emacs，打造高效开发环境。
 </div>
 
 
-<div id="outline-container-org7b90060" class="outline-2">
-<h2 id="org7b90060">安装</h2>
-<div class="outline-text-2" id="text-org7b90060">
+<div id="outline-container-org6320f40" class="outline-2">
+<h2 id="org6320f40">安装</h2>
+<div class="outline-text-2" id="text-org6320f40">
 </div>
-<div id="outline-container-org08d7494" class="outline-3">
-<h3 id="org08d7494">Homebrew</h3>
-<div class="outline-text-3" id="text-org08d7494">
+<div id="outline-container-org485f06a" class="outline-3">
+<h3 id="org485f06a">Homebrew</h3>
+<div class="outline-text-3" id="text-org485f06a">
 <div style="text-align: left;">
   <a href="https://brew.sh"><img src="https://brew.sh/assets/img/homebrew-256x256.png" style="width: 140px;"/></a>
 </div>
@@ -356,16 +357,16 @@ tmux以及emacs，打造高效开发环境。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">/usr/bin/ruby -e <span style="color: #ffff88;">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span>
+<pre class="src src-sh">/usr/bin/ruby -e <span style="color: #f3f99d;">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span>
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org1de5ae6" class="outline-3">
-<h3 id="org1de5ae6">Iterm2</h3>
-<div class="outline-text-3" id="text-org1de5ae6">
+<div id="outline-container-orga81f641" class="outline-3">
+<h3 id="orga81f641">Iterm2</h3>
+<div class="outline-text-3" id="text-orga81f641">
 <div style="text-align: left;">
   <a href="https://www.iterm2.com/"><img src="https://www.iterm2.com/img/logo2x.jpg" style="width: 200px;"/></a>
 </div>
@@ -378,18 +379,18 @@ tmux以及emacs，打造高效开发环境。
 
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#33719;&#21462;iterm2&#30340;&#20449;&#24687;</span>
+<pre class="src src-sh"><span style="color: #606580;"># </span><span style="color: #606580;">&#33719;&#21462;iterm2&#30340;&#20449;&#24687;</span>
 brew cask info iterm2
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iterm2: 3.2.9 (auto_updates)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://www.iterm2.com/</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Not installed</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/iterm2.rb</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Name</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iTerm2</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Artifacts</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">iTerm.app (App)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">iterm2: 3.2.9 (auto_updates)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">https://www.iterm2.com/</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Not installed</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/iterm2.rb</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Name</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">iTerm2</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Artifacts</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">iTerm.app (App)</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#25191;&#34892;&#23433;&#35013;</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">&#25191;&#34892;&#23433;&#35013;</span>
 brew cask install iterm2
 </pre>
 </div>
@@ -397,9 +398,9 @@ brew cask install iterm2
 </div>
 
 
-<div id="outline-container-org795797c" class="outline-3">
-<h3 id="org795797c">Zsh</h3>
-<div class="outline-text-3" id="text-org795797c">
+<div id="outline-container-org44dc04d" class="outline-3">
+<h3 id="org44dc04d">Zsh</h3>
+<div class="outline-text-3" id="text-org44dc04d">
 <p>
 <a href="https://www.zsh.org/">Zsh</a>是unix环境下的shell程序，它对bash进行了扩展，并且借鉴了许多bash，ksh，tcsh的
 功能，它有如下特性：
@@ -427,9 +428,9 @@ brew cask install iterm2
 </div>
 
 
-<div id="outline-container-orgaa40320" class="outline-3">
-<h3 id="orgaa40320">Tmux</h3>
-<div class="outline-text-3" id="text-orgaa40320">
+<div id="outline-container-org0c1cda2" class="outline-3">
+<h3 id="org0c1cda2">Tmux</h3>
+<div class="outline-text-3" id="text-org0c1cda2">
 <p>
 <a href="https://github.com/tmux/tmux">Tmux</a>是非常好用的终端复用工具，能够在单个screen里面创建、访问和管理多个终端，同时
 也可以脱离screen在后台运行。执行下面的命令查看和安装tmux：
@@ -437,28 +438,28 @@ brew cask install iterm2
 
 <div class="org-src-container">
 <pre class="src src-sh">brew info tmux
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">tmux: stable 2.9 (bottled), HEAD</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Terminal multiplexer</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://tmux.github.io/</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/usr/local/Cellar/tmux/2.8 (10 files, 709.5KB) *</span>
-<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">Poured from bottle on 2019-03-27 at 23:15:10</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-core/blob/master/Formula/tmux.rb</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Dependencies</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Build: pkg-config &#10004;</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Required: libevent &#10004;, ncurses &#10004;</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Options</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">--HEAD</span>
-<span style="color: #7a7a7a;">#         </span><span style="color: #7a7a7a;">Install HEAD version</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Caveats</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Example configuration has been installed to:</span>
-<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">/usr/local/opt/tmux/share/tmux</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">tmux: stable 2.9 (bottled), HEAD</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Terminal multiplexer</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">https://tmux.github.io/</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">/usr/local/Cellar/tmux/2.8 (10 files, 709.5KB) *</span>
+<span style="color: #606580;">#   </span><span style="color: #606580;">Poured from bottle on 2019-03-27 at 23:15:10</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">From: https://github.com/Homebrew/homebrew-core/blob/master/Formula/tmux.rb</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Dependencies</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Build: pkg-config &#10004;</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Required: libevent &#10004;, ncurses &#10004;</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Options</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">--HEAD</span>
+<span style="color: #606580;">#         </span><span style="color: #606580;">Install HEAD version</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Caveats</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Example configuration has been installed to:</span>
+<span style="color: #606580;">#   </span><span style="color: #606580;">/usr/local/opt/tmux/share/tmux</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Bash completion has been installed to:</span>
-<span style="color: #7a7a7a;">#   </span><span style="color: #7a7a7a;">/usr/local/etc/bash_completion.d</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Analytics</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install: 70,198 (30 days), 118,149 (90 days), 385,484 (365 days)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install_on_request: 59,955 (30 days), 103,387 (90 days), 332,667 (365 days)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">build_error: 0 (30 days)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Bash completion has been installed to:</span>
+<span style="color: #606580;">#   </span><span style="color: #606580;">/usr/local/etc/bash_completion.d</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Analytics</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">install: 70,198 (30 days), 118,149 (90 days), 385,484 (365 days)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">install_on_request: 59,955 (30 days), 103,387 (90 days), 332,667 (365 days)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">build_error: 0 (30 days)</span>
 
 brew install tmux
 </pre>
@@ -467,9 +468,9 @@ brew install tmux
 </div>
 
 
-<div id="outline-container-org3fa3441" class="outline-3">
-<h3 id="org3fa3441">Emacs</h3>
-<div class="outline-text-3" id="text-org3fa3441">
+<div id="outline-container-orga997b88" class="outline-3">
+<h3 id="orga997b88">Emacs</h3>
+<div class="outline-text-3" id="text-orga997b88">
 <div style="text-align: left;">
   <a href="https://www.gnu.org/s/emacs/"><img src="http://ergoemacs.org/emacs/emacs_logo/emacs_logo.svg" style="width: 140px;"/></a>
 </div>
@@ -489,18 +490,18 @@ Vim,Vscode,Sublime Text等。
 
 <div class="org-src-container">
 <pre class="src src-sh">brew cask info emacs
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">emacs: 26.2</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">https://emacsformacosx.com/</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Not installed</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/emacs.rb</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Name</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Emacs</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">==&gt; Artifacts</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">Emacs.app (App)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/Emacs -&gt; emacs (Binary)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/ebrowse (Binary)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/emacsclient (Binary)</span>
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">/Applications/Emacs.app/Contents/MacOS/bin/etags (Binary)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">emacs: 26.2</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">https://emacsformacosx.com/</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Not installed</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">From: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/emacs.rb</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Name</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Emacs</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">==&gt; Artifacts</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">Emacs.app (App)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">/Applications/Emacs.app/Contents/MacOS/Emacs -&gt; emacs (Binary)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">/Applications/Emacs.app/Contents/MacOS/bin/ebrowse (Binary)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">/Applications/Emacs.app/Contents/MacOS/bin/emacsclient (Binary)</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">/Applications/Emacs.app/Contents/MacOS/bin/etags (Binary)</span>
 
 brew cask install emacs
 </pre>
@@ -510,17 +511,17 @@ brew cask install emacs
 </div>
 
 
-<div id="outline-container-org18f1395" class="outline-2">
-<h2 id="org18f1395">配置</h2>
-<div class="outline-text-2" id="text-org18f1395">
+<div id="outline-container-orga025502" class="outline-2">
+<h2 id="orga025502">配置</h2>
+<div class="outline-text-2" id="text-orga025502">
 </div>
-<div id="outline-container-org697a96f" class="outline-3">
-<h3 id="org697a96f">Iterm2</h3>
-<div class="outline-text-3" id="text-org697a96f">
+<div id="outline-container-orgf1f00f2" class="outline-3">
+<h3 id="orgf1f00f2">Iterm2</h3>
+<div class="outline-text-3" id="text-orgf1f00f2">
 </div>
-<div id="outline-container-orgbadf33f" class="outline-4">
-<h4 id="orgbadf33f">主题</h4>
-<div class="outline-text-4" id="text-orgbadf33f">
+<div id="outline-container-org6fabc91" class="outline-4">
+<h4 id="org6fabc91">主题</h4>
+<div class="outline-text-4" id="text-org6fabc91">
 <p>
 克隆Iterm2的主题库，超过200+多个主题可供选择，安装方法如下：
 </p>
@@ -542,9 +543,9 @@ brew cask install emacs
 </div>
 </div>
 
-<div id="outline-container-org7d86282" class="outline-4">
-<h4 id="org7d86282">修改按键</h4>
-<div class="outline-text-4" id="text-org7d86282">
+<div id="outline-container-org758a659" class="outline-4">
+<h4 id="org758a659">修改按键</h4>
+<div class="outline-text-4" id="text-org758a659">
 <p>
 为了便于在iterm2中使用emacs，我修改right command键为ctrl键，因为emacs的许多按键
 操作都是ctrl开始的。
@@ -566,17 +567,17 @@ brew cask install emacs
 </div>
 </div>
 
-<div id="outline-container-orgbdd86ee" class="outline-3">
-<h3 id="orgbdd86ee">Zsh</h3>
-<div class="outline-text-3" id="text-orgbdd86ee">
+<div id="outline-container-orgaaca6be" class="outline-3">
+<h3 id="orgaaca6be">Zsh</h3>
+<div class="outline-text-3" id="text-orgaaca6be">
 <div style="text-align: left;">
     <img src="https://camo.githubusercontent.com/5c385f15f3eaedb72cfcfbbaf75355b700ac0757/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6f686d797a73682f6f682d6d792d7a73682d6c6f676f2e706e67" style="width: 280px;"/>
 </div>
 </div>
 
-<div id="outline-container-org172b6df" class="outline-4">
-<h4 id="org172b6df">配置文件</h4>
-<div class="outline-text-4" id="text-org172b6df">
+<div id="outline-container-org51e062d" class="outline-4">
+<h4 id="org51e062d">配置文件</h4>
+<div class="outline-text-4" id="text-org51e062d">
 <p>
 <a href="https://ohmyz.sh/">Oh My Zsh</a>是开源的社区驱动的zsh配置文件项目，能够方便快捷的配置zsh，实现开箱即用
 的终端环境；
@@ -588,19 +589,19 @@ brew cask install emacs
 </div>
 
 <ul class="org-ul">
-<li><a id="org94f3ea7"></a>通过curl安装：<br />
-<div class="outline-text-5" id="text-org94f3ea7">
+<li><a id="org4c1802e"></a>通过curl安装：<br />
+<div class="outline-text-5" id="text-org4c1802e">
 <div class="org-src-container">
-<pre class="src src-sh">sh -c <span style="color: #ffff88;">"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"</span>
+<pre class="src src-sh">sh -c <span style="color: #f3f99d;">"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"</span>
 </pre>
 </div>
 </div>
 </li>
 
-<li><a id="org20bf7ba"></a>通过wget安装:<br />
-<div class="outline-text-5" id="text-org20bf7ba">
+<li><a id="org0b70556"></a>通过wget安装:<br />
+<div class="outline-text-5" id="text-org0b70556">
 <div class="org-src-container">
-<pre class="src src-sh">sh -c <span style="color: #ffff88;">"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"</span>
+<pre class="src src-sh">sh -c <span style="color: #f3f99d;">"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"</span>
 </pre>
 </div>
 </div>
@@ -608,16 +609,16 @@ brew cask install emacs
 </ul>
 </div>
 
-<div id="outline-container-org1b0e105" class="outline-4">
-<h4 id="org1b0e105">插件配置</h4>
-<div class="outline-text-4" id="text-org1b0e105">
+<div id="outline-container-org1db28e1" class="outline-4">
+<h4 id="org1db28e1">插件配置</h4>
+<div class="outline-text-4" id="text-org1db28e1">
 <p>
 oy-my-zsh支持插件，能够在命令行下更好的显示相关信息，比如git的信息，在~/.zshrc中
 可以修改插件。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffff; font-weight: bold;">plugins</span>=<span style="color: #ffffff;">(</span>
+<pre class="src src-sh"><span style="color: #ff5c57;">plugins</span>=<span style="color: #57c7ff;">(</span>
   git
   bundler
   dotenv
@@ -625,29 +626,29 @@ oy-my-zsh支持插件，能够在命令行下更好的显示相关信息，比�
   rake
   rbenv
   ruby
-<span style="color: #ffffff;">)</span>
+<span style="color: #57c7ff;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org85bbb26" class="outline-4">
-<h4 id="org85bbb26">主题配置</h4>
-<div class="outline-text-4" id="text-org85bbb26">
+<div id="outline-container-org58b5d76" class="outline-4">
+<h4 id="org58b5d76">主题配置</h4>
+<div class="outline-text-4" id="text-org58b5d76">
 <p>
 绝大部分主题都需要Powerline字体，因此先安装字体:
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">clone</span>
+<pre class="src src-sh"><span style="color: #ff6ac1;">cd</span> ~
+<span style="color: #606580;"># </span><span style="color: #606580;">clone</span>
 git clone https://github.com/powerline/fonts.git --depth=1
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">install</span>
-<span style="color: #ffbb66;">cd</span> fonts
+<span style="color: #606580;"># </span><span style="color: #606580;">install</span>
+<span style="color: #ff6ac1;">cd</span> fonts
 ./install.sh
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">clean-up a bit</span>
-<span style="color: #ffbb66;">cd</span> ..
+<span style="color: #606580;"># </span><span style="color: #606580;">clean-up a bit</span>
+<span style="color: #ff6ac1;">cd</span> ..
 rm -rf fonts
 </pre>
 </div>
@@ -666,31 +667,31 @@ rm -rf fonts
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffff; font-weight: bold;">ZSH_THEME</span>=<span style="color: #ffff88;">"powerlevel9k/powerlevel9k"</span>
+<pre class="src src-sh"><span style="color: #ff5c57;">ZSH_THEME</span>=<span style="color: #f3f99d;">"powerlevel9k/powerlevel9k"</span>
 
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_PROMPT_ON_NEWLINE</span>=true
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_RPROMPT_ON_NEWLINE</span>=true
+<span style="color: #ff5c57;">POWERLEVEL9K_PROMPT_ON_NEWLINE</span>=true
+<span style="color: #ff5c57;">POWERLEVEL9K_RPROMPT_ON_NEWLINE</span>=true
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">&#21487;&#20197;&#28155;&#21152;&#26356;&#22810;&#30340;&#25554;&#20214;</span>
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</span>=<span style="color: #ffffff;">(</span>dir vcs<span style="color: #ffffff;">)</span>
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR</span>=$<span style="color: #ffff88;">'\uE0B1'</span>
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR</span>=$<span style="color: #ffff88;">'\uE0B3'</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">&#21487;&#20197;&#28155;&#21152;&#26356;&#22810;&#30340;&#25554;&#20214;</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</span>=<span style="color: #57c7ff;">(</span>dir vcs<span style="color: #57c7ff;">)</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR</span>=$<span style="color: #f3f99d;">'\uE0B1'</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR</span>=$<span style="color: #f3f99d;">'\uE0B3'</span>
 
-<span style="color: #7a7a7a;"># </span><span style="color: #7a7a7a;">POWERLEVEL9K_COLOR_SCHEME='light'</span>
+<span style="color: #606580;"># </span><span style="color: #606580;">POWERLEVEL9K_COLOR_SCHEME='light'</span>
 
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX</span>=<span style="color: #ffff88;">"&#8625;"</span>
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX</span>=<span style="color: #ffff88;">"&#8627; "</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX</span>=<span style="color: #f3f99d;">"&#8625;"</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX</span>=<span style="color: #f3f99d;">"&#8627; "</span>
 
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_TIME_FOREGROUND</span>=<span style="color: #ffff88;">'red'</span>
-<span style="color: #ffffff; font-weight: bold;">POWERLEVEL9K_TIME_BACKGROUND</span>=<span style="color: #ffff88;">'blue'</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_TIME_FOREGROUND</span>=<span style="color: #f3f99d;">'red'</span>
+<span style="color: #ff5c57;">POWERLEVEL9K_TIME_BACKGROUND</span>=<span style="color: #f3f99d;">'blue'</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd816a56" class="outline-4">
-<h4 id="orgd816a56">Powerlevel9k插件</h4>
-<div class="outline-text-4" id="text-orgd816a56">
+<div id="outline-container-org0b19258" class="outline-4">
+<h4 id="org0b19258">Powerlevel9k插件</h4>
+<div class="outline-text-4" id="text-org0b19258">
 <ul class="org-ul">
 <li>background<sub>jobs</sub> - Indicator for background jobs.</li>
 <li>battery - Current battery status.</li>
@@ -719,9 +720,9 @@ rm -rf fonts
 </div>
 </div>
 
-<div id="outline-container-orgb95f330" class="outline-3">
-<h3 id="orgb95f330">Tmux</h3>
-<div class="outline-text-3" id="text-orgb95f330">
+<div id="outline-container-orgac9d276" class="outline-3">
+<h3 id="orgac9d276">Tmux</h3>
+<div class="outline-text-3" id="text-orgac9d276">
 <p>
 <a href="https://github.com/gpakosz/.tmux">Oy My Tmux</a>是漂亮、灵活的配置文件，基本实现开箱即用，非常强大，后期只需要修改
 prefix按键即可。
@@ -732,9 +733,9 @@ prefix按键即可。
 </div>
 </div>
 
-<div id="outline-container-org2f25238" class="outline-4">
-<h4 id="org2f25238">配置要求</h4>
-<div class="outline-text-4" id="text-org2f25238">
+<div id="outline-container-orgc8b69f7" class="outline-4">
+<h4 id="orgc8b69f7">配置要求</h4>
+<div class="outline-text-4" id="text-orgc8b69f7">
 <ul class="org-ul">
 <li>Tmux版本大于2.1, 运行在Linux, Mac, OpenBSD, Cygwin中；</li>
 <li>环境变量$TERM必须设置为xterm-256color</li>
@@ -742,11 +743,11 @@ prefix按键即可。
 </div>
 </div>
 
-<div id="outline-container-orgc6a483a" class="outline-4">
-<h4 id="orgc6a483a">配置安装</h4>
-<div class="outline-text-4" id="text-orgc6a483a">
+<div id="outline-container-org074ea78" class="outline-4">
+<h4 id="org074ea78">配置安装</h4>
+<div class="outline-text-4" id="text-org074ea78">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffbb66;">cd</span> ~
+<pre class="src src-sh"><span style="color: #ff6ac1;">cd</span> ~
 git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 cp .tmux/.tmux.conf.local .
@@ -757,9 +758,9 @@ cp .tmux/.tmux.conf.local .
 </div>
 
 
-<div id="outline-container-orgf546e72" class="outline-3">
-<h3 id="orgf546e72">Emacs</h3>
-<div class="outline-text-3" id="text-orgf546e72">
+<div id="outline-container-org95258ee" class="outline-3">
+<h3 id="org95258ee">Emacs</h3>
+<div class="outline-text-3" id="text-org95258ee">
 <p>
 Emacs的配置参见我写的另一篇文章<a href="https://huadeyu.tech/tools/emacs-setup-notes.html">《从零开始配置emacs编辑器》</a>。
 </p>
@@ -768,13 +769,13 @@ Emacs的配置参见我写的另一篇文章<a href="https://huadeyu.tech/tools/
 </div>
 
 
-<div id="outline-container-org0edcf1a" class="outline-2">
-<h2 id="org0edcf1a">指南</h2>
-<div class="outline-text-2" id="text-org0edcf1a">
+<div id="outline-container-org65af9ca" class="outline-2">
+<h2 id="org65af9ca">指南</h2>
+<div class="outline-text-2" id="text-org65af9ca">
 </div>
-<div id="outline-container-orgbf4939f" class="outline-3">
-<h3 id="orgbf4939f">Tmux快捷键指南</h3>
-<div class="outline-text-3" id="text-orgbf4939f">
+<div id="outline-container-orga422ac6" class="outline-3">
+<h3 id="orga422ac6">Tmux快捷键指南</h3>
+<div class="outline-text-3" id="text-orga422ac6">
 <div style="text-align: left;">
     <img src="../images/tools/tmuxcheatsheet.png" />
 </div>
@@ -782,9 +783,9 @@ Emacs的配置参见我写的另一篇文章<a href="https://huadeyu.tech/tools/
 </div>
 
 
-<div id="outline-container-org832b553" class="outline-3">
-<h3 id="org832b553">Emacs快捷键指南</h3>
-<div class="outline-text-3" id="text-org832b553">
+<div id="outline-container-org66833bf" class="outline-3">
+<h3 id="org66833bf">Emacs快捷键指南</h3>
+<div class="outline-text-3" id="text-org66833bf">
 <div style="text-align: left;">
     <img src="../images/tools/emacs-cheetsheet.jpeg" />
 </div>
@@ -801,10 +802,10 @@ Emacs的配置参见我写的另一篇文章<a href="https://huadeyu.tech/tools/
 <div id="icons">
   <div id="nav">
     <div id="home">
-      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+      <a href="/index.html">Home <i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div id="github">
-      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+      <a href="https://github.com/deyuhua" target="_blank">Github <i class="fab fa-github"></i></a>
     </div>
   </div>
   <div id="avstar">

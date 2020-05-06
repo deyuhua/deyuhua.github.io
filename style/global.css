@@ -5,6 +5,7 @@
 
 html {
     margin: 0;
+    background-color: #fff;
 }
 
 html, body {
@@ -18,11 +19,12 @@ body {
     font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
     font-size: 15px;
     letter-spacing: 0;
-    overflow-x: hidden;
+    overflow-x: scroll;
     border: none;
     background-color: transparent;
     margin: 0 auto;
-    max-width: 778px;
+    max-width: 68%;
+    min-width: 768px;;
 }
 
 ::-webkit-scrollbar { 
@@ -81,12 +83,29 @@ img {
     max-width: 100%;
 }
 
+ul li::before {
+    position: relative;
+    content: "\e65d";
+    font-family: themify;
+    font-size: 14px;
+    left: -5px;
+    top: 1px;
+    color: #3d87d6;
+    transition: .3s ease;
+}
+
+ul li {
+    list-style-type: none;
+}
+
 pre {
-  background-color: #3c4557;
-  color: #657b83;
+  /* /\* background-color: #3c4557; *\/ */
+    /* color: #657b83; */
+  color: #fff;
   border: 1pt solid #93a1a1;
   padding: 1em;
-  box-shadow: 5pt 5pt 8pt #eee8d5;
+  /* box-shadow: 5pt 5pt 8pt #eee8d5; */
+  overflow: scroll !important;
 }
 code {
   background-color: #eee8d5;

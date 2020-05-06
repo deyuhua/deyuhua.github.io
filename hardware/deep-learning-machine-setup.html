@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-17 Tue 15:02 -->
+<!-- 2020-04-30 Thu 09:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>搭建深度学习硬件环境</title>
@@ -199,6 +199,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="baidu-site-verification" content="VsK7KMhTM1" />
 <link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="/style/themify-icons.css" type="text/css"/>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="/images/favicon.png" rel="icon">
@@ -266,14 +267,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org76c72f2">硬件环境配置</a></li>
-<li><a href="#orgf4d85c4">硬件配置清单</a></li>
-<li><a href="#orgefa291f">软件配置</a>
+<li><a href="#org709f242">硬件环境配置</a></li>
+<li><a href="#org382d9d5">硬件配置清单</a></li>
+<li><a href="#org9c73c29">软件配置</a>
 <ul>
-<li><a href="#orgd9587e9">安装openssl-server</a></li>
-<li><a href="#org4c7f3fe">Cuda安装</a></li>
-<li><a href="#org2dd69ec">安装显卡驱动</a></li>
-<li><a href="#org8145c71">安装tensorflow</a></li>
+<li><a href="#org743a0f5">安装openssl-server</a></li>
+<li><a href="#orgcf59828">Cuda安装</a></li>
+<li><a href="#orgd881282">安装显卡驱动</a></li>
+<li><a href="#orgee2f7b8">安装tensorflow</a></li>
 </ul>
 </li>
 </ul>
@@ -281,9 +282,9 @@
 </div>
 
 
-<div id="outline-container-org76c72f2" class="outline-2">
-<h2 id="org76c72f2">硬件环境配置</h2>
-<div class="outline-text-2" id="text-org76c72f2">
+<div id="outline-container-org709f242" class="outline-2">
+<h2 id="org709f242">硬件环境配置</h2>
+<div class="outline-text-2" id="text-org709f242">
 <p>
 学习深度学习需要GPU计算环境，Macbook Pro没法满足条件，因此重新配置专门用于深度学习的台式机；
 </p>
@@ -295,9 +296,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgf4d85c4" class="outline-2">
-<h2 id="orgf4d85c4">硬件配置清单</h2>
-<div class="outline-text-2" id="text-orgf4d85c4">
+<div id="outline-container-org382d9d5" class="outline-2">
+<h2 id="org382d9d5">硬件配置清单</h2>
+<div class="outline-text-2" id="text-org382d9d5">
 <ol class="org-ol">
 <li>华硕 z170 pro gamming的主板；</li>
 <li>英特尔i5 7600k，接口类型LGA 1151，可以超频；</li>
@@ -319,18 +320,18 @@ BIOS才能成功点亮；
 </div>
 </div>
 
-<div id="outline-container-orgefa291f" class="outline-2">
-<h2 id="orgefa291f">软件配置</h2>
-<div class="outline-text-2" id="text-orgefa291f">
+<div id="outline-container-org9c73c29" class="outline-2">
+<h2 id="org9c73c29">软件配置</h2>
+<div class="outline-text-2" id="text-org9c73c29">
 <p>
 我一直是Arch Linux的忠实粉丝，但是为了便于安装显卡驱动和cuda开发套件，选择了
 ubuntu 16.04；
 </p>
 </div>
 
-<div id="outline-container-orgd9587e9" class="outline-3">
-<h3 id="orgd9587e9">安装openssl-server</h3>
-<div class="outline-text-3" id="text-orgd9587e9">
+<div id="outline-container-org743a0f5" class="outline-3">
+<h3 id="org743a0f5">安装openssl-server</h3>
+<div class="outline-text-3" id="text-org743a0f5">
 <p>
 首先配置sshd，以便在MBP上用SSH登陆。为了成功登陆到主机，要保证网络都是连接好的，
 特别是wifi有时会不稳定，设置成自动连接的模式会比较好；在windows上可以使用putty
@@ -339,9 +340,9 @@ ubuntu 16.04；
 </div>
 </div>
 
-<div id="outline-container-org4c7f3fe" class="outline-3">
-<h3 id="org4c7f3fe">Cuda安装</h3>
-<div class="outline-text-3" id="text-org4c7f3fe">
+<div id="outline-container-orgcf59828" class="outline-3">
+<h3 id="orgcf59828">Cuda安装</h3>
+<div class="outline-text-3" id="text-orgcf59828">
 <p>
 如果系统已经安装了英伟达的显卡驱动，重新安装前需要删除之前的显卡驱动，然后再安装新的显卡驱动；
 </p>
@@ -374,7 +375,7 @@ sudo apt-get autoremove
 
 <div class="org-src-container">
 <pre class="src src-sh">blacklist nouveau
-options nouveau <span style="color: #ffffff; font-weight: bold;">modeset</span>=0
+options nouveau <span style="color: #ff5c57;">modeset</span>=0
 </pre>
 </div></li>
 <li><p>
@@ -392,8 +393,8 @@ options nouveau <span style="color: #ffffff; font-weight: bold;">modeset</span>=
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffbb66;">export</span> <span style="color: #ffffff; font-weight: bold;">PATH</span>=/usr/local/cuda-8.0/bin$<span style="color: #ffffff;">{</span><span style="color: #ffffff; font-weight: bold;">PATH</span>:+:$<span style="color: #88eeff;">{</span><span style="color: #ffffff; font-weight: bold;">PATH</span><span style="color: #88eeff;">}</span><span style="color: #ffffff;">}</span>
-<span style="color: #ffbb66;">export</span> <span style="color: #ffffff; font-weight: bold;">LD_LIBRARY_PATH</span>=/usr/local/cuda-8.0/lib64$<span style="color: #ffffff;">{</span><span style="color: #ffffff; font-weight: bold;">LD_LIBRARY_PATH</span>:+:$<span style="color: #88eeff;">{</span><span style="color: #ffffff; font-weight: bold;">LD_LIBRARY_PATH</span><span style="color: #88eeff;">}</span><span style="color: #ffffff;">}</span>
+<pre class="src src-sh"><span style="color: #ff6ac1;">export</span> <span style="color: #ff5c57;">PATH</span>=/usr/local/cuda-8.0/bin$<span style="color: #57c7ff;">{</span><span style="color: #ff5c57;">PATH</span>:+:$<span style="color: #ff6ac1;">{</span><span style="color: #ff5c57;">PATH</span><span style="color: #ff6ac1;">}</span><span style="color: #57c7ff;">}</span>
+<span style="color: #ff6ac1;">export</span> <span style="color: #ff5c57;">LD_LIBRARY_PATH</span>=/usr/local/cuda-8.0/lib64$<span style="color: #57c7ff;">{</span><span style="color: #ff5c57;">LD_LIBRARY_PATH</span>:+:$<span style="color: #ff6ac1;">{</span><span style="color: #ff5c57;">LD_LIBRARY_PATH</span><span style="color: #ff6ac1;">}</span><span style="color: #57c7ff;">}</span>
 </pre>
 </div>
 
@@ -402,8 +403,8 @@ options nouveau <span style="color: #ffffff; font-weight: bold;">modeset</span>=
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nvcc: NVIDIA <span style="color: #ffffff;">(</span>R<span style="color: #ffffff;">)</span> Cuda compiler driver
-<span style="color: #55ff77; font-weight: bold;">Copyright</span> <span style="color: #ffffff;">(</span>c<span style="color: #ffffff;">)</span> 2005-2016 NVIDIA Corporation
+<pre class="src src-sh">nvcc: NVIDIA <span style="color: #57c7ff;">(</span>R<span style="color: #57c7ff;">)</span> Cuda compiler driver
+<span style="color: #57c7ff;">Copyright</span> <span style="color: #57c7ff;">(</span>c<span style="color: #57c7ff;">)</span> 2005-2016 NVIDIA Corporation
 Built on Tue_Jan_10_13:22:03_CST_2017
 Cuda compilation tools, release 8.0, V8.0.61
 </pre>
@@ -411,9 +412,9 @@ Cuda compilation tools, release 8.0, V8.0.61
 </div>
 </div>
 
-<div id="outline-container-org2dd69ec" class="outline-3">
-<h3 id="org2dd69ec">安装显卡驱动</h3>
-<div class="outline-text-3" id="text-org2dd69ec">
+<div id="outline-container-orgd881282" class="outline-3">
+<h3 id="orgd881282">安装显卡驱动</h3>
+<div class="outline-text-3" id="text-orgd881282">
 <p>
 执行下面的命令添加驱动源，然后安装gtx 1070的显卡驱动。
 </p>
@@ -453,9 +454,9 @@ sudo reboot
 </div>
 </div>
 
-<div id="outline-container-org8145c71" class="outline-3">
-<h3 id="org8145c71">安装tensorflow</h3>
-<div class="outline-text-3" id="text-org8145c71">
+<div id="outline-container-orgee2f7b8" class="outline-3">
+<h3 id="orgee2f7b8">安装tensorflow</h3>
+<div class="outline-text-3" id="text-orgee2f7b8">
 <p>
 安装好tensorflow之后，如果在import的时候出现libcudnn.so.5无法找到，按照以下步骤解决问题：
 </p>
@@ -485,10 +486,10 @@ cp lib64/* /user/local/lib64/
 <div id="icons">
   <div id="nav">
     <div id="home">
-      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+      <a href="/index.html">Home <i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div id="github">
-      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+      <a href="https://github.com/deyuhua" target="_blank">Github <i class="fab fa-github"></i></a>
     </div>
   </div>
   <div id="avstar">

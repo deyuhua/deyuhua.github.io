@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-17 Tue 15:02 -->
+<!-- 2020-04-30 Thu 09:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux系统的chroot实现原理</title>
@@ -199,6 +199,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="baidu-site-verification" content="VsK7KMhTM1" />
 <link rel="stylesheet" href="/style/global.css" type="text/css"/>
+<link rel="stylesheet" href="/style/themify-icons.css" type="text/css"/>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="/images/favicon.png" rel="icon">
@@ -266,22 +267,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org569f0c3">前言</a></li>
-<li><a href="#org38c1aa0">实现</a>
+<li><a href="#org65d6ab9">前言</a></li>
+<li><a href="#org5489404">实现</a>
 <ul>
-<li><a href="#orgcaa8a4c">系统调用实现</a></li>
-<li><a href="#org7a9b654">查找current进程</a></li>
-<li><a href="#org5a956d6">改变root目录</a></li>
+<li><a href="#orge996492">系统调用实现</a></li>
+<li><a href="#org976c195">查找current进程</a></li>
+<li><a href="#org2b0a5dd">改变root目录</a></li>
 </ul>
 </li>
-<li><a href="#orge6613f0">总结</a></li>
+<li><a href="#orgd9a0f5d">总结</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org569f0c3" class="outline-2">
-<h2 id="org569f0c3">前言</h2>
-<div class="outline-text-2" id="text-org569f0c3">
+<div id="outline-container-org65d6ab9" class="outline-2">
+<h2 id="org65d6ab9">前言</h2>
+<div class="outline-text-2" id="text-org65d6ab9">
 <p>
 大学刚接触的linux的时候，折腾系统是家常便饭，在重装系统的时候经常使用chroot来配
 置新的系统，当时觉得是很神奇，最近在看容器的时候，再次看到chroot，就决定对chroot
@@ -292,13 +293,13 @@ chroot并不能创建安全的隔离环境，只是修改进程查找目录的�
 </div>
 </div>
 
-<div id="outline-container-org38c1aa0" class="outline-2">
-<h2 id="org38c1aa0">实现</h2>
-<div class="outline-text-2" id="text-org38c1aa0">
+<div id="outline-container-org5489404" class="outline-2">
+<h2 id="org5489404">实现</h2>
+<div class="outline-text-2" id="text-org5489404">
 </div>
-<div id="outline-container-orgcaa8a4c" class="outline-3">
-<h3 id="orgcaa8a4c">系统调用实现</h3>
-<div class="outline-text-3" id="text-orgcaa8a4c">
+<div id="outline-container-orge996492" class="outline-3">
+<h3 id="orge996492">系统调用实现</h3>
+<div class="outline-text-3" id="text-orge996492">
 <p>
 Linux分为用户态和内核态，普通进程想要调用系统功能，只能通过系统调用来实现，
 chroot运行在内核，因此需要执行运行态的切换，调用系统函数ksys<sub>chroot函数</sub>.
@@ -306,111 +307,111 @@ chroot运行在内核，因此需要执行运行态的切换，调用系统函�
 
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">&#36890;&#36807;filename&#25351;&#23450;&#26032;&#30340;root&#30446;&#24405;</span>
-<span style="color: #bb99ff;">int</span> <span style="color: #55ff77; font-weight: bold;">ksys_chroot</span><span style="color: #ffffff;">(</span><span style="color: #ff77cc; font-weight: bold;">const</span> <span style="color: #bb99ff;">char</span> <span style="color: #ffffff; font-weight: bold;">__user</span> *filename<span style="color: #ffffff;">)</span>
-<span style="color: #ffffff;">{</span>
-  <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">path</span> <span style="color: #ffffff; font-weight: bold;">path</span>;
-  <span style="color: #bb99ff;">int</span> <span style="color: #ffffff; font-weight: bold;">error</span>;
-  <span style="color: #bb99ff;">unsigned</span> <span style="color: #bb99ff;">int</span> <span style="color: #ffffff; font-weight: bold;">lookup_flags</span> = LOOKUP_FOLLOW | LOOKUP_DIRECTORY;
- <span style="color: #88eeff;">retry</span>:
-  error = user_path_at<span style="color: #88eeff;">(</span>AT_FDCWD, filename, lookup_flags, &amp;path<span style="color: #88eeff;">)</span>;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span>error<span style="color: #88eeff;">)</span>
-    <span style="color: #ff77cc; font-weight: bold;">goto</span> <span style="color: #88eeff;">out</span>;
+<pre class="src src-C"><span style="color: #606580;">// </span><span style="color: #606580;">&#36890;&#36807;filename&#25351;&#23450;&#26032;&#30340;root&#30446;&#24405;</span>
+<span style="color: #9aedfe;">int</span> <span style="color: #57c7ff;">ksys_chroot</span><span style="color: #57c7ff;">(</span><span style="color: #ffb86c;">const</span> <span style="color: #9aedfe;">char</span> <span style="color: #ff5c57;">__user</span> *filename<span style="color: #57c7ff;">)</span>
+<span style="color: #57c7ff;">{</span>
+  <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">path</span> <span style="color: #ff5c57;">path</span>;
+  <span style="color: #9aedfe;">int</span> <span style="color: #ff5c57;">error</span>;
+  <span style="color: #9aedfe;">unsigned</span> <span style="color: #9aedfe;">int</span> <span style="color: #ff5c57;">lookup_flags</span> = LOOKUP_FOLLOW | LOOKUP_DIRECTORY;
+ <span style="color: #5af78e;">retry</span>:
+  error = user_path_at<span style="color: #ff6ac1;">(</span>AT_FDCWD, filename, lookup_flags, &amp;path<span style="color: #ff6ac1;">)</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span>error<span style="color: #ff6ac1;">)</span>
+    <span style="color: #ffb86c;">goto</span> <span style="color: #5af78e;">out</span>;
 
-  error = inode_permission<span style="color: #88eeff;">(</span>path.dentry-&gt;d_inode, MAY_EXEC | MAY_CHDIR<span style="color: #88eeff;">)</span>;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span>error<span style="color: #88eeff;">)</span>
-    <span style="color: #ff77cc; font-weight: bold;">goto</span> <span style="color: #88eeff;">dput_and_out</span>;
+  error = inode_permission<span style="color: #ff6ac1;">(</span>path.dentry-&gt;d_inode, MAY_EXEC | MAY_CHDIR<span style="color: #ff6ac1;">)</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span>error<span style="color: #ff6ac1;">)</span>
+    <span style="color: #ffb86c;">goto</span> <span style="color: #5af78e;">dput_and_out</span>;
 
   error = -EPERM;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span><span style="color: #88eeff;">!</span>ns_capable<span style="color: #bb99ff;">(</span>current_user_ns<span style="color: #ff77cc;">()</span>, CAP_SYS_CHROOT<span style="color: #bb99ff;">)</span><span style="color: #88eeff;">)</span>
-    <span style="color: #ff77cc; font-weight: bold;">goto</span> <span style="color: #88eeff;">dput_and_out</span>;
-  error = security_path_chroot<span style="color: #88eeff;">(</span>&amp;path<span style="color: #88eeff;">)</span>;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span>error<span style="color: #88eeff;">)</span>
-    <span style="color: #ff77cc; font-weight: bold;">goto</span> <span style="color: #88eeff;">dput_and_out</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span><span style="color: #ff6ac1; font-weight: bold;">!</span>ns_capable<span style="color: #5af78e;">(</span>current_user_ns<span style="color: #ffb86c;">()</span>, CAP_SYS_CHROOT<span style="color: #5af78e;">)</span><span style="color: #ff6ac1;">)</span>
+    <span style="color: #ffb86c;">goto</span> <span style="color: #5af78e;">dput_and_out</span>;
+  error = security_path_chroot<span style="color: #ff6ac1;">(</span>&amp;path<span style="color: #ff6ac1;">)</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span>error<span style="color: #ff6ac1;">)</span>
+    <span style="color: #ffb86c;">goto</span> <span style="color: #5af78e;">dput_and_out</span>;
 
-  <span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">current&#34920;&#31034;&#24403;&#21069;&#30340;&#36827;&#31243;&#65292;&#35843;&#29992;set_fs_root&#26469;&#25913;&#21464;root&#30446;&#24405;</span>
-  set_fs_root<span style="color: #88eeff;">(</span>current-&gt;fs, &amp;path<span style="color: #88eeff;">)</span>;
+  <span style="color: #606580;">// </span><span style="color: #606580;">current&#34920;&#31034;&#24403;&#21069;&#30340;&#36827;&#31243;&#65292;&#35843;&#29992;set_fs_root&#26469;&#25913;&#21464;root&#30446;&#24405;</span>
+  set_fs_root<span style="color: #ff6ac1;">(</span>current-&gt;fs, &amp;path<span style="color: #ff6ac1;">)</span>;
   error = 0;
- <span style="color: #88eeff;">dput_and_out</span>:
-  path_put<span style="color: #88eeff;">(</span>&amp;path<span style="color: #88eeff;">)</span>;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span>retry_estale<span style="color: #bb99ff;">(</span>error, lookup_flags<span style="color: #bb99ff;">)</span><span style="color: #88eeff;">)</span> <span style="color: #88eeff;">{</span>
+ <span style="color: #5af78e;">dput_and_out</span>:
+  path_put<span style="color: #ff6ac1;">(</span>&amp;path<span style="color: #ff6ac1;">)</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span>retry_estale<span style="color: #5af78e;">(</span>error, lookup_flags<span style="color: #5af78e;">)</span><span style="color: #ff6ac1;">)</span> <span style="color: #ff6ac1;">{</span>
     lookup_flags |= LOOKUP_REVAL;
-    <span style="color: #ff77cc; font-weight: bold;">goto</span> <span style="color: #88eeff;">retry</span>;
-  <span style="color: #88eeff;">}</span>
- <span style="color: #88eeff;">out</span>:
-  <span style="color: #ff77cc; font-weight: bold;">return</span> error;
-<span style="color: #ffffff;">}</span>
+    <span style="color: #ffb86c;">goto</span> <span style="color: #5af78e;">retry</span>;
+  <span style="color: #ff6ac1;">}</span>
+ <span style="color: #5af78e;">out</span>:
+  <span style="color: #ffb86c;">return</span> error;
+<span style="color: #57c7ff;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7a9b654" class="outline-3">
-<h3 id="org7a9b654">查找current进程</h3>
-<div class="outline-text-3" id="text-org7a9b654">
+<div id="outline-container-org976c195" class="outline-3">
+<h3 id="org976c195">查找current进程</h3>
+<div class="outline-text-3" id="text-org976c195">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">current&#23454;&#38469;&#25191;&#34892;&#20102;get_current&#20989;&#25968;</span>
-<span style="color: #000000; background-color: #def;">#def</span><span style="color: #ffbb66;">ine</span> <span style="color: #ffffff; font-weight: bold;">current</span> get_current<span style="color: #ffffff;">()</span>
+<pre class="src src-C"><span style="color: #606580;">// </span><span style="color: #606580;">current&#23454;&#38469;&#25191;&#34892;&#20102;get_current&#20989;&#25968;</span>
+<span style="color: #000000; background-color: #def;">#def</span><span style="color: #ff6ac1; font-weight: bold;">ine</span> <span style="color: #ff5c57;">current</span> get_current<span style="color: #57c7ff;">()</span>
 
 
-<span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">get_current&#36820;&#22238;&#30340;&#26159;&#24403;&#21069;&#36827;&#31243;&#30340;task_struct&#32467;&#26500;</span>
-<span style="color: #ff77cc; font-weight: bold;">static</span> __always_inline <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">task_struct</span> *<span style="color: #55ff77; font-weight: bold;">get_current</span><span style="color: #ffffff;">(</span><span style="color: #bb99ff;">void</span><span style="color: #ffffff;">)</span>
-<span style="color: #ffffff;">{</span>
-  <span style="color: #ff77cc; font-weight: bold;">return</span> this_cpu_read_stable<span style="color: #88eeff;">(</span>current_task<span style="color: #88eeff;">)</span>;
-<span style="color: #ffffff;">}</span>
+<span style="color: #606580;">// </span><span style="color: #606580;">get_current&#36820;&#22238;&#30340;&#26159;&#24403;&#21069;&#36827;&#31243;&#30340;task_struct&#32467;&#26500;</span>
+<span style="color: #ffb86c;">static</span> __always_inline <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">task_struct</span> *<span style="color: #57c7ff;">get_current</span><span style="color: #57c7ff;">(</span><span style="color: #9aedfe;">void</span><span style="color: #57c7ff;">)</span>
+<span style="color: #57c7ff;">{</span>
+  <span style="color: #ffb86c;">return</span> this_cpu_read_stable<span style="color: #ff6ac1;">(</span>current_task<span style="color: #ff6ac1;">)</span>;
+<span style="color: #57c7ff;">}</span>
 
-<span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">&#22312;task_struct&#32467;&#26500;&#20307;&#20013;&#26377;&#20010;fs&#30340;fs_struct</span>
-<span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">fs_struct</span>                *<span style="color: #ffffff; font-weight: bold;">fs</span>;
+<span style="color: #606580;">// </span><span style="color: #606580;">&#22312;task_struct&#32467;&#26500;&#20307;&#20013;&#26377;&#20010;fs&#30340;fs_struct</span>
+<span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">fs_struct</span>                *<span style="color: #ff5c57;">fs</span>;
 
-<span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">real fs struct</span>
-<span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">fs_struct</span> <span style="color: #ffffff;">{</span>
-  <span style="color: #bb99ff;">int</span> <span style="color: #ffffff; font-weight: bold;">users</span>; 
-  <span style="color: #bb99ff;">spinlock_t</span> <span style="color: #ffffff; font-weight: bold;">lock</span>; 
-  <span style="color: #bb99ff;">seqcount_t</span> <span style="color: #ffffff; font-weight: bold;">seq</span>;
-  <span style="color: #bb99ff;">int</span> <span style="color: #ffffff; font-weight: bold;">umask</span>;
-  <span style="color: #bb99ff;">int</span> <span style="color: #ffffff; font-weight: bold;">in_exec</span>;
-  <span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">root&#21644;pwd&#20998;&#21035;&#23450;&#20041;&#20102;&#26681;&#30446;&#24405;&#21644;&#24403;&#21069;&#30446;&#24405;</span>
-  <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">path</span> <span style="color: #ffffff; font-weight: bold;">root</span>, <span style="color: #ffffff; font-weight: bold;">pwd</span>;
-<span style="color: #ffffff;">}</span> <span style="color: #ffffff; font-weight: bold;">__randomize_layout</span>;
+<span style="color: #606580;">// </span><span style="color: #606580;">real fs struct</span>
+<span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">fs_struct</span> <span style="color: #57c7ff;">{</span>
+  <span style="color: #9aedfe;">int</span> <span style="color: #ff5c57;">users</span>; 
+  <span style="color: #9aedfe;">spinlock_t</span> <span style="color: #ff5c57;">lock</span>; 
+  <span style="color: #9aedfe;">seqcount_t</span> <span style="color: #ff5c57;">seq</span>;
+  <span style="color: #9aedfe;">int</span> <span style="color: #ff5c57;">umask</span>;
+  <span style="color: #9aedfe;">int</span> <span style="color: #ff5c57;">in_exec</span>;
+  <span style="color: #606580;">// </span><span style="color: #606580;">root&#21644;pwd&#20998;&#21035;&#23450;&#20041;&#20102;&#26681;&#30446;&#24405;&#21644;&#24403;&#21069;&#30446;&#24405;</span>
+  <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">path</span> <span style="color: #ff5c57;">root</span>, <span style="color: #ff5c57;">pwd</span>;
+<span style="color: #57c7ff;">}</span> <span style="color: #ff5c57;">__randomize_layout</span>;
 
-<span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">path struct</span>
-<span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">path</span> <span style="color: #ffffff;">{</span>
-  <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">vfsmount</span> *<span style="color: #ffffff; font-weight: bold;">mnt</span>;
-  <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">dentry</span> *<span style="color: #ffffff; font-weight: bold;">dentry</span>;
-<span style="color: #ffffff;">}</span> <span style="color: #ffffff; font-weight: bold;">__randomize_layout</span>;
+<span style="color: #606580;">// </span><span style="color: #606580;">path struct</span>
+<span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">path</span> <span style="color: #57c7ff;">{</span>
+  <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">vfsmount</span> *<span style="color: #ff5c57;">mnt</span>;
+  <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">dentry</span> *<span style="color: #ff5c57;">dentry</span>;
+<span style="color: #57c7ff;">}</span> <span style="color: #ff5c57;">__randomize_layout</span>;
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5a956d6" class="outline-3">
-<h3 id="org5a956d6">改变root目录</h3>
-<div class="outline-text-3" id="text-org5a956d6">
+<div id="outline-container-org2b0a5dd" class="outline-3">
+<h3 id="org2b0a5dd">改变root目录</h3>
+<div class="outline-text-3" id="text-org2b0a5dd">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #bb99ff;">void</span> <span style="color: #55ff77; font-weight: bold;">set_fs_root</span><span style="color: #ffffff;">(</span><span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">fs_struct</span> *<span style="color: #ffffff; font-weight: bold;">fs</span>, <span style="color: #ff77cc; font-weight: bold;">const</span> <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">path</span> *<span style="color: #ffffff; font-weight: bold;">path</span><span style="color: #ffffff;">)</span>
-<span style="color: #ffffff;">{</span>
-  <span style="color: #ff77cc; font-weight: bold;">struct</span> <span style="color: #bb99ff;">path</span> <span style="color: #ffffff; font-weight: bold;">old_root</span>;
+<pre class="src src-C"><span style="color: #9aedfe;">void</span> <span style="color: #57c7ff;">set_fs_root</span><span style="color: #57c7ff;">(</span><span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">fs_struct</span> *<span style="color: #ff5c57;">fs</span>, <span style="color: #ffb86c;">const</span> <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">path</span> *<span style="color: #ff5c57;">path</span><span style="color: #57c7ff;">)</span>
+<span style="color: #57c7ff;">{</span>
+  <span style="color: #ffb86c;">struct</span> <span style="color: #9aedfe;">path</span> <span style="color: #ff5c57;">old_root</span>;
 
-  <span style="color: #55ff77; font-weight: bold;">path_get</span><span style="color: #88eeff;">(</span><span style="color: #bb99ff;">path</span><span style="color: #88eeff;">)</span>;
-  spin_lock<span style="color: #88eeff;">(</span>&amp;fs-&gt;lock<span style="color: #88eeff;">)</span>; <span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">&#25913;&#21464;&#26681;&#30446;&#24405;&#21069;&#20808;&#19978;&#38145;</span>
-  write_seqcount_begin<span style="color: #88eeff;">(</span>&amp;fs-&gt;seq<span style="color: #88eeff;">)</span>;
-  old_root = fs-&gt;root; <span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">&#20445;&#23384;&#20037;&#30340;&#26681;&#30446;&#24405;</span>
-  fs-&gt;root = *path; <span style="color: #7a7a7a;">// </span><span style="color: #7a7a7a;">&#25191;&#34892;chroot&#25805;&#20316;&#65292;&#25913;&#21464;&#26681;&#30446;&#24405;</span>
-  write_seqcount_end<span style="color: #88eeff;">(</span>&amp;fs-&gt;seq<span style="color: #88eeff;">)</span>;
-  spin_unlock<span style="color: #88eeff;">(</span>&amp;fs-&gt;lock<span style="color: #88eeff;">)</span>;
-  <span style="color: #ff77cc; font-weight: bold;">if</span> <span style="color: #88eeff;">(</span>old_root.dentry<span style="color: #88eeff;">)</span>
-    path_put<span style="color: #88eeff;">(</span>&amp;old_root<span style="color: #88eeff;">)</span>;
-<span style="color: #ffffff;">}</span>
+  <span style="color: #57c7ff;">path_get</span><span style="color: #ff6ac1;">(</span><span style="color: #9aedfe;">path</span><span style="color: #ff6ac1;">)</span>;
+  spin_lock<span style="color: #ff6ac1;">(</span>&amp;fs-&gt;lock<span style="color: #ff6ac1;">)</span>; <span style="color: #606580;">// </span><span style="color: #606580;">&#25913;&#21464;&#26681;&#30446;&#24405;&#21069;&#20808;&#19978;&#38145;</span>
+  write_seqcount_begin<span style="color: #ff6ac1;">(</span>&amp;fs-&gt;seq<span style="color: #ff6ac1;">)</span>;
+  old_root = fs-&gt;root; <span style="color: #606580;">// </span><span style="color: #606580;">&#20445;&#23384;&#20037;&#30340;&#26681;&#30446;&#24405;</span>
+  fs-&gt;root = *path; <span style="color: #606580;">// </span><span style="color: #606580;">&#25191;&#34892;chroot&#25805;&#20316;&#65292;&#25913;&#21464;&#26681;&#30446;&#24405;</span>
+  write_seqcount_end<span style="color: #ff6ac1;">(</span>&amp;fs-&gt;seq<span style="color: #ff6ac1;">)</span>;
+  spin_unlock<span style="color: #ff6ac1;">(</span>&amp;fs-&gt;lock<span style="color: #ff6ac1;">)</span>;
+  <span style="color: #ffb86c;">if</span> <span style="color: #ff6ac1;">(</span>old_root.dentry<span style="color: #ff6ac1;">)</span>
+    path_put<span style="color: #ff6ac1;">(</span>&amp;old_root<span style="color: #ff6ac1;">)</span>;
+<span style="color: #57c7ff;">}</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge6613f0" class="outline-2">
-<h2 id="orge6613f0">总结</h2>
-<div class="outline-text-2" id="text-orge6613f0">
+<div id="outline-container-orgd9a0f5d" class="outline-2">
+<h2 id="orgd9a0f5d">总结</h2>
+<div class="outline-text-2" id="text-orgd9a0f5d">
 <p>
 分析完chroot的原理之后，发现实现还是非常容易理解的，所谓的改变root目录，其实就是
 改变进程的task<sub>struct中fs结构体中的root字段</sub>，实现不同的根目录查询。从实现角度看，
@@ -428,10 +429,10 @@ chroot的确不能实现安全的环境隔离。
 <div id="icons">
   <div id="nav">
     <div id="home">
-      <a href="/index.html">home <i class="fa fa-home" aria-hidden="true"></i></a>
+      <a href="/index.html">Home <i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div id="github">
-      <a href="https://github.com/deyuhua" target="_blank">github <i class="fab fa-github"></i></a>
+      <a href="https://github.com/deyuhua" target="_blank">Github <i class="fab fa-github"></i></a>
     </div>
   </div>
   <div id="avstar">
